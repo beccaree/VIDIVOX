@@ -58,7 +58,7 @@ public class StartFrame extends JFrame {
 	 */
 	public StartFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 150, 500, 300);
+		setBounds(300, 200, 500, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
