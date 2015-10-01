@@ -1,4 +1,4 @@
-package videoPlayer;
+package merge;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -15,6 +15,7 @@ import javax.swing.JProgressBar;
 public class WaitProcessBar extends JFrame {
 
 	private JPanel contentPane;
+	protected JProgressBar progressBar; // Allow the process to update the progress bar
 
 	/**
 	 * Launch the application.
@@ -48,7 +49,7 @@ public class WaitProcessBar extends JFrame {
 		contentPane.add(lblPleaseWaitWhile);
 		lblPleaseWaitWhile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setBounds(10, 43, 464, 31);
 		contentPane.add(progressBar);
 	}
