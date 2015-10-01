@@ -124,14 +124,21 @@ public class AudioPane extends JPanel {
 		add(merge_Panel);
 		merge_Panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		// Let user select an .mp3 file to merge with current video
-		JButton btnMerge = new JButton("Merge With MP3");
-		btnMerge.addActionListener(new ActionListener() {
+		// Let user select an .mp3 file to merge into the beginning of current video
+		JButton btnMergeBegin = new JButton("Merge MP3 at Beginning");
+		btnMergeBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-										
+				
 			}
 		});
-		merge_Panel.add(btnMerge);
+		merge_Panel.add(btnMergeBegin);
+		
+		// Let user select an .mp3 file to merge into any point of current video
+		JButton btnMergeAnywhere = new JButton("Merge MP3 at...");
+		btnMergeAnywhere.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			}
+		});
 	}
-	
 }
