@@ -1,49 +1,9 @@
 package videoPlayer;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JSlider;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import universalMethods.Utility;
-
-import java.awt.GridLayout;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
@@ -74,7 +34,7 @@ public class MainFrame extends JFrame {
 		JPanel audioPane = new AudioPane(this);
 				
 				
-		// Adding the two different panels to the two sides of the split pane ---------------->
+		// Adding the two different panels to the two sides of the split pane ----------->
 		JSplitPane splitPane = new JSplitPane();
 		setContentPane(splitPane);
 		splitPane.setResizeWeight(0.9); // Resizes the frames in a 8:2 ratio
@@ -85,8 +45,13 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 		
 		VideoPane.video.playMedia(currentVideoPath); // Play the video
-		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
 				
+		initialiseVideo();
+	}
+	
+	protected static void initialiseVideo() {
+		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
+		// Sets the progress bar to the length of the current video
 		final int[] vidLength = {0}; // Initialize as array so final value can be changed
 		while(vidLength[0] == 0) {
 			vidLength[0] = (int)((VideoPane.video.getLength())/1000);

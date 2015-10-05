@@ -18,22 +18,6 @@ public class WaitProcessBar extends JFrame {
 	protected JProgressBar progressBar; // Allow the process to update the progress bar
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					WaitProcessBar frame = new WaitProcessBar();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public WaitProcessBar() {

@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import merge.MergePrompt;
+
 import universalMethods.Utility;
 
 public class AudioPane extends JPanel {
@@ -109,21 +111,27 @@ public class AudioPane extends JPanel {
 		merge_Panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		// Let user select an .mp3 file to merge into the beginning of current video
-		JButton btnMergeBegin = new JButton("Merge a MP3 at Beginning");
+		JButton btnMergeBegin = new JButton("Merge Audio at Beginning");
 		btnMergeBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				// Simply merge the video at the beginning
+				JDialog merge = new MergePrompt(0);
+				merge.setVisible(true);
 			}
 		});
 		merge_Panel.add(btnMergeBegin);
 		
 		// Let user select an .mp3 file to merge into any point of current video
-		JButton btnMergeAnywhere = new JButton("Merge a MP3 at...");
-		btnMergeAnywhere.addActionListener(new ActionListener() {
+		JButton btnMergeAt = new JButton("Merge Audio here");
+		btnMergeAt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				// This button should only be enabled if the video is paused
+				
+				// Merge video here
+				JDialog merge = new MergePrompt(0/*video.getTime or something to get the time vid is paused at*/);
+				merge.setVisible(true);
 			}
 		});
-		merge_Panel.add(btnMergeAnywhere);
+		merge_Panel.add(btnMergeAt);
 	}
 }

@@ -78,7 +78,7 @@ public class StartFrame extends JFrame {
 		panel.add(panel_1);
 		
 		txtVideoPath = new JTextField();
-		txtVideoPath.setText("/HOME/");
+		txtVideoPath.setText("/VideoFiles/");
 		panel_1.add(txtVideoPath);
 		txtVideoPath.setColumns(30);
 		

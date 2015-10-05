@@ -28,7 +28,7 @@ public class MyMenuBar extends JMenuBar {
 						
 				String newPath;
 				JFileChooser videoChooser = new JFileChooser(System.getProperty("user.dir") + "/VideoFiles/");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video File", "avi");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video Files (*.avi) or (*.mp4)", "avi", "mp4");
 				videoChooser.setFileFilter(filter);
 				int okReturnVal = videoChooser.showOpenDialog(getParent());
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
@@ -37,6 +37,7 @@ public class MyMenuBar extends JMenuBar {
 						// Set current video path to new path
 						VideoPane.video.playMedia(newPath);
 						VideoPane.setCurrentVideoPath(newPath);
+						MainFrame.initialiseVideo();
 					} else {
 						JOptionPane.showMessageDialog(parent, "The file you have chosen is not a video, please try again.");
 					}
@@ -55,16 +56,32 @@ public class MyMenuBar extends JMenuBar {
 		});
 		mnFile.add(mntmExit);
 				
-		JMenu mnEdit = new JMenu("Edit");
-		add(mnEdit);
-				
-		JMenuItem mntmSetSkipInterval = new JMenuItem("Set Skip Interval...");
-		mntmSetSkipInterval.addActionListener(new ActionListener() {
+		JMenu mnHelp = new JMenu("Help");
+		add(mnHelp);
+		
+		JMenuItem mntmVideo = new JMenuItem("Video Controls");
+		mntmVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				// Bring up instructions on merging
 			}
 		});
-		mnEdit.add(mntmSetSkipInterval);
+		mnHelp.add(mntmVideo);	
+		
+		JMenuItem mntmMerging = new JMenuItem("Merging");
+		mntmMerging.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Bring up instructions on merging
+			}
+		});
+		mnHelp.add(mntmMerging);
+		
+		JMenuItem mntmCreating = new JMenuItem("Creating an MP3");
+		mntmCreating.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Bring up instructions on merging
+			}
+		});
+		mnHelp.add(mntmCreating);
 	}
 
 }

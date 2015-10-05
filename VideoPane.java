@@ -81,7 +81,7 @@ public class VideoPane extends JPanel {
 		btnSkipBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Skips backward 5 seconds every time it is clicked
-				video.skip(-5000);
+				video.skip(-10000);
 			}
 		});
 		video_control.add(btnSkipBack);
@@ -128,7 +128,7 @@ public class VideoPane extends JPanel {
 		btnSkipForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Skips forward 5 seconds every time it is clicked
-				video.skip(5000);
+				video.skip(10000);
 			}
 		});
 		video_control.add(btnSkipForward);
@@ -219,6 +219,11 @@ public class VideoPane extends JPanel {
 	protected static void setCurrentVideoPath(String newPath) {
 		// Sets the current video path to the new path
 		currentVideoPath = newPath;
+	}
+	
+	public static String getCurrentVideoPath() {
+		// Returns the path of the video currently playing
+		return currentVideoPath;
 	}
 	
 }
