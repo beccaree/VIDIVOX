@@ -37,5 +37,6 @@ public class WaitProcessBar extends JFrame {
 		progressBar.setBounds(10, 43, 464, 31);
 		contentPane.add(progressBar);
 	}
-
+	
+	
 }
