@@ -94,24 +94,8 @@ public class AudioPane extends JPanel {
 	   			
 	   			if (words.length > 0 && words.length <= 40) {
 	   				// Prompt user for what they want to name their mp3 file
-	   				String name = JOptionPane.showInputDialog(parent, "What would you like to name your MP3?");
-	   				
-					if(name != null) { // User clicked cancel
-						if(!name.equals("")) { 
-							// Check if name already exists
-							File newMP3 = new File("MP3Files/" + name + ".mp3");
-							if(newMP3.exists()) {
-								// Display an error dialog
-								JOptionPane.showMessageDialog(parent, "The name you have chosen already exists, please choose another.", "Duplicate name", JOptionPane.ERROR_MESSAGE);
-							} else {
-								// Create the MP3 file from the commentary
-								Utility.saveAsMp3(commentary, name);
-								JOptionPane.showMessageDialog(parent, name + ".mp3 has been created in MP3Files");
-							}
-						} else { // User didn't enter anything
-							JOptionPane.showMessageDialog(parent, "You didn't enter anything", "Empty name", JOptionPane.ERROR_MESSAGE);
-						}
-					}
+	   				JDialog mp3Name = new MP3Prompt(commentary);
+	   				mp3Name.setVisible(true);
 	   			} else {
 	   				JOptionPane.showMessageDialog(parent, "Please only have between 1 and 40 words. Please try again.", "Too many words", JOptionPane.ERROR_MESSAGE);
 	   			}
@@ -125,7 +109,7 @@ public class AudioPane extends JPanel {
 		merge_Panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		// Let user select an .mp3 file to merge into the beginning of current video
-		JButton btnMergeBegin = new JButton("Merge MP3 at Beginning");
+		JButton btnMergeBegin = new JButton("Merge a MP3 at Beginning");
 		btnMergeBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -134,11 +118,12 @@ public class AudioPane extends JPanel {
 		merge_Panel.add(btnMergeBegin);
 		
 		// Let user select an .mp3 file to merge into any point of current video
-		JButton btnMergeAnywhere = new JButton("Merge MP3 at...");
+		JButton btnMergeAnywhere = new JButton("Merge a MP3 at...");
 		btnMergeAnywhere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
 			}
 		});
+		merge_Panel.add(btnMergeAnywhere);
 	}
 }
