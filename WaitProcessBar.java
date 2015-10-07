@@ -22,7 +22,7 @@ public class WaitProcessBar extends JFrame {
 	 */
 	public WaitProcessBar() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(350, 300, 500, 100);
+		setBounds(350, 300, 500, 150);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -38,5 +38,7 @@ public class WaitProcessBar extends JFrame {
 		contentPane.add(progressBar);
 	}
 	
-	
+	protected void updateProgress(int i) {
+		progressBar.setValue(i);
+	}
 }
