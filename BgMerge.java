@@ -39,9 +39,12 @@ public class BgMerge extends SwingWorker<Void, Integer> {
 			Thread.sleep(40);
 			progress.updateProgress(i);
 		}
-		
-		// Creates a hidden mp3 file output.mp3 that combines the video audio and selected mp3 audio for merging 
-		cmd = "ffmpeg -y -i " + audioPath + " -i ./MP3Files/.vidAudio.mp3 -filter_complex amix=inputs=2 ./MP3Files/.output.mp3";
+		if(time == 0) {
+			// Creates a hidden mp3 file output.mp3 that combines the video audio and selected mp3 audio for merging 
+			cmd = "ffmpeg -y -i " + audioPath + " -i ./MP3Files/.vidAudio.mp3 -filter_complex amix=inputs=2 ./MP3Files/.output.mp3";
+		} else {
+			cmd = "ffmpeg -y -i " + audioPath + " -i ./MP3Files/.vidAudio.mp3 -filter_complex \"[0:0]adelay=" + time + "[aud1];[aud1][1:0]amix=inputs=2\" ./MP3Files/.output.mp3";
+		}
 		
 		builder = new ProcessBuilder("/bin/bash", "-c", cmd);
 		process = builder.start();
