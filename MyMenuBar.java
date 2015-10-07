@@ -38,6 +38,7 @@ public class MyMenuBar extends JMenuBar {
 						VideoPane.video.playMedia(newPath);
 						VideoPane.setCurrentVideoPath(newPath);
 						MainFrame.initialiseVideo();
+						VideoPane.setPlayBtnIcon("Play");
 					} else {
 						JOptionPane.showMessageDialog(parent, "The file you have chosen is not a video, please try again.");
 					}

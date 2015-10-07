@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 public class VideoPane extends JPanel {
 	
 	private static JProgressBar bar;
+	private static JButton btnPlay;
 	
 	protected static MediaPlayer video;
 	protected static String currentVideoPath;
@@ -71,7 +72,7 @@ public class VideoPane extends JPanel {
 		btnSkipBack.setIcon(new ImageIcon("buttons/skipb.png"));
 		JButton btnRewind = new JButton();
 		btnRewind.setIcon(new ImageIcon("buttons/rewind.png"));
-		final JButton btnPlay = new JButton();
+		btnPlay = new JButton();
 		btnPlay.setIcon(new ImageIcon("buttons/pause.png"));
 		JButton btnForward = new JButton();
 		btnForward.setIcon(new ImageIcon("buttons/forward.png"));
@@ -105,10 +106,12 @@ public class VideoPane extends JPanel {
 					video.play(); // Play the video
 					playClicked = true;
 					stopForward = false;
+					AudioPane.btnMergeAt.setEnabled(false);
 				} else {
 					btnPlay.setIcon(new ImageIcon("buttons/play.png"));
 					video.pause(); // Pause the video
 					playClicked = false;
+					AudioPane.btnMergeAt.setEnabled(true);
 				}
 			}
 		});
@@ -224,6 +227,14 @@ public class VideoPane extends JPanel {
 	public static String getCurrentVideoPath() {
 		// Returns the path of the video currently playing
 		return currentVideoPath;
+	}
+
+	public static void setPlayBtnIcon(String icon) {
+		// Sets the icon of play button
+		if(!playClicked) {
+			btnPlay.setIcon(new ImageIcon("buttons/pause.png"));
+			playClicked = true;
+		}
 	}
 	
 }

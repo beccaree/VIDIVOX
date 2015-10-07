@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import merge.MergePrompt;
 
@@ -29,22 +31,22 @@ public class AudioPane extends JPanel {
 	
 	private ArrayList<Integer> killPID = new ArrayList<Integer>();
 	
+	protected static JButton btnMergeAt;
+	
 	public AudioPane(final JFrame parent) {
 		setMinimumSize(new Dimension(300, 500));
 		setBackground(Color.DARK_GRAY);
 		setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel lblEnterYourCommentary = new JLabel("Enter Commentary here:"); // Label to tell user what the text area is for
+		JLabel lblEnterYourCommentary = new JLabel("Enter Commentary here: (max 40)"); // Label to tell user what the text area is for
 		lblEnterYourCommentary.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblEnterYourCommentary.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEnterYourCommentary.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		lblEnterYourCommentary.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEnterYourCommentary.setForeground(Color.pink);
 		add(lblEnterYourCommentary);
 				
 		final JTextArea txtrCommentary = new JTextArea(); // TextArea for user to enter their commentary
 		txtrCommentary.setRows(5);
-		txtrCommentary.setText("(max 40 words)");
 		txtrCommentary.setLineWrap(true);
 		add(txtrCommentary);
 		
@@ -52,7 +54,7 @@ public class AudioPane extends JPanel {
 		audio_options.setBackground(Color.DARK_GRAY);
 		add(audio_options);
 		
-		JButton btnSpeak = new JButton("Speak");
+		final JButton btnSpeak = new JButton("Speak");
 		btnSpeak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Speak commentary to the user through festival text-to-speech
@@ -62,9 +64,10 @@ public class AudioPane extends JPanel {
 				killPID.removeAll(killPID);		
 			}
 		});
+		btnSpeak.setEnabled(false);
 		audio_options.add(btnSpeak);
 		
-		JButton btnStop = new JButton("Stop");
+		final JButton btnStop = new JButton("Stop");
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Kill the festival process (Stop speaking)
@@ -86,7 +89,7 @@ public class AudioPane extends JPanel {
 		audio_options.add(btnStop);
 		
 		// Save input in text area as .wav file and convert it to an .mp3
-		JButton btnSaveAs = new JButton("Save as MP3");
+		final JButton btnSaveAs = new JButton("Save as MP3");
 		btnSaveAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -103,7 +106,31 @@ public class AudioPane extends JPanel {
 	   			}
 			}
 		});
+		btnSaveAs.setEnabled(false);
 		audio_options.add(btnSaveAs);
+		
+		txtrCommentary.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				if(txtrCommentary.getText().length() > 0) {
+					btnSpeak.setEnabled(true);
+					btnSaveAs.setEnabled(true);
+				} else {
+					btnSpeak.setEnabled(false);
+					btnSaveAs.setEnabled(false);
+				}
+			}
+			public void removeUpdate(DocumentEvent e) {
+				if(txtrCommentary.getText().length() > 0) {
+					btnSpeak.setEnabled(true);
+					btnSaveAs.setEnabled(true);
+				} else {
+					btnSpeak.setEnabled(false);
+					btnSaveAs.setEnabled(false);
+				}
+			}
+			public void changedUpdate(DocumentEvent e) {
+			}
+		});
 		
 		JPanel merge_Panel = new JPanel();
 		merge_Panel.setBackground(Color.DARK_GRAY);
@@ -121,17 +148,21 @@ public class AudioPane extends JPanel {
 		});
 		merge_Panel.add(btnMergeBegin);
 		
+		JLabel lblPauseFirst = new JLabel("Please pause video at desired position");
+		lblPauseFirst.setForeground(Color.pink);
+		merge_Panel.add(lblPauseFirst);
+		
 		// Let user select an .mp3 file to merge into any point of current video
-		JButton btnMergeAt = new JButton("Merge Audio here");
+		btnMergeAt = new JButton("Merge Audio here...");
 		btnMergeAt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// This button should only be enabled if the video is paused
-				
-				// Merge video here
-				JDialog merge = new MergePrompt(0/*video.getTime or something to get the time vid is paused at*/);
+				// Merge video at position video is paused at
+				JDialog merge = new MergePrompt(VideoPane.video.getTime());
 				merge.setVisible(true);
 			}
 		});
+		btnMergeAt.setEnabled(false);
 		merge_Panel.add(btnMergeAt);
 	}
 }

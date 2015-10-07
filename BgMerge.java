@@ -14,10 +14,10 @@ public class BgMerge extends SwingWorker<Void, Integer> {
 	private String name;
 	private String videoPath;
 	private String audioPath;
-	private int time;
+	private long time;
 	private WaitProcessBar progress;
 	
-	public BgMerge(String name, String videoPath, String audioPath, int time, WaitProcessBar progress) {
+	public BgMerge(String name, String videoPath, String audioPath, long time, WaitProcessBar progress) {
 		this.name = name;
 		this.videoPath = videoPath;
 		this.audioPath = audioPath;

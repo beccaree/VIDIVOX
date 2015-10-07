@@ -12,7 +12,6 @@ import javax.swing.JSplitPane;
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
-	private String currentVideoPath;
 
 	/**
 	 * Create the frame.
@@ -21,7 +20,6 @@ public class MainFrame extends JFrame {
 		setTitle("VIDIVOX - Video/Audio Overlay Platform");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 50, 1000, 650);
-		currentVideoPath = videoPath;
 		
 		// Top menu bar implementation -------------------------------------------------->
 		JMenuBar menuBar = new MyMenuBar(this);
@@ -44,8 +42,9 @@ public class MainFrame extends JFrame {
 				
 		this.setVisible(true);
 		
-		VideoPane.video.playMedia(currentVideoPath); // Play the video
-				
+		VideoPane.setCurrentVideoPath(videoPath);
+		VideoPane.video.playMedia(VideoPane.getCurrentVideoPath()); // Play the video
+
 		initialiseVideo();
 	}
 	

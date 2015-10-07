@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -33,13 +35,14 @@ public class MergePrompt extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public MergePrompt(final int time) {
+	public MergePrompt(final long time) {
 		setBounds(350, 250, 485, 280);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		final JDialog thisDialog = this;
+		final JButton btnMerge = new JButton("Merge");
 		
 		JLabel lblMergeSettings = new JLabel("Merge Settings");
 		lblMergeSettings.setHorizontalAlignment(SwingConstants.CENTER);
@@ -67,7 +70,6 @@ public class MergePrompt extends JDialog {
 		contentPanel.add(lblMpToBe);
 		
 		final JTextField txtAudioPath = new JTextField();
-		txtAudioPath.setText("/MP3Files/");
 		txtAudioPath.setBounds(174, 163, 182, 20);
 		contentPanel.add(txtAudioPath);
 		txtAudioPath.setColumns(10);
@@ -92,8 +94,7 @@ public class MergePrompt extends JDialog {
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		
-		JButton btnMerge = new JButton("Merge");
+
 		btnMerge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Before merging check that there are no user errors.
@@ -125,8 +126,33 @@ public class MergePrompt extends JDialog {
 			}
 		});
 		btnMerge.setActionCommand("OK");
+		btnMerge.setEnabled(false);
 		buttonPane.add(btnMerge);
 		getRootPane().setDefaultButton(btnMerge);
+		
+		DocumentListener MyDocListener = new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				// Make sure both lines are none empty
+				if(txtName.getText().length() > 0 && txtAudioPath.getText().length() > 0) {
+					btnMerge.setEnabled(true);
+				} else {
+					btnMerge.setEnabled(false);
+				}
+			}
+			public void removeUpdate(DocumentEvent e) {
+				// Make sure both lines are none empty
+				if(txtName.getText().length() > 0 && txtAudioPath.getText().length() > 0) {
+					btnMerge.setEnabled(true);
+				} else {
+					btnMerge.setEnabled(false);
+				}
+			}
+			public void changedUpdate(DocumentEvent e) {
+			}
+		};
+		
+		txtName.getDocument().addDocumentListener(MyDocListener);
+		txtAudioPath.getDocument().addDocumentListener(MyDocListener);
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
