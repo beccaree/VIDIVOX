@@ -35,10 +35,9 @@ public class MyMenuBar extends JMenuBar {
 					newPath = videoChooser.getSelectedFile().getPath();
 					if(Utility.isVideo(newPath)) {
 						// Set current video path to new path
-						VideoPane.video.playMedia(newPath);
 						VideoPane.setCurrentVideoPath(newPath);
 						MainFrame.initialiseVideo();
-						VideoPane.setPlayBtnIcon("Play");
+						VideoPane.setPlayBtnIcon();
 					} else {
 						JOptionPane.showMessageDialog(parent, "The file you have chosen is not a video, please try again.");
 					}
@@ -57,6 +56,48 @@ public class MyMenuBar extends JMenuBar {
 		});
 		mnFile.add(mntmExit);
 				
+		JMenu mnEdit = new JMenu("Edit");
+		add(mnEdit);
+		
+		JMenu mnSkip = new JMenu("Set Skip Interval to...");
+		mnEdit.add(mnSkip);
+		
+		JMenuItem mntmInterval5 = new JMenuItem("5 Seconds");
+		mntmInterval5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the interval to 5 seconds
+				VideoPane.setSkipInterval(5);
+			}
+		});
+		mnSkip.add(mntmInterval5);
+		
+		JMenuItem mntmInterval10 = new JMenuItem("10 Seconds");
+		mntmInterval10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the interval to 10 seconds
+				VideoPane.setSkipInterval(10);
+			}
+		});
+		mnSkip.add(mntmInterval10);
+		
+		JMenuItem mntmInterval15 = new JMenuItem("15 Seconds");
+		mntmInterval15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the interval to 15 seconds
+				VideoPane.setSkipInterval(15);
+			}
+		});
+		mnSkip.add(mntmInterval15);
+		
+		JMenuItem mntmInterval20 = new JMenuItem("20 Seconds");
+		mntmInterval20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the interval to 20 seconds
+				VideoPane.setSkipInterval(20);
+			}
+		});
+		mnSkip.add(mntmInterval20);
+		
 		JMenu mnHelp = new JMenu("Help");
 		add(mnHelp);
 		
@@ -64,6 +105,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Bring up instructions on merging
+				
 			}
 		});
 		mnHelp.add(mntmVideo);	

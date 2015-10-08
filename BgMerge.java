@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+import videoPlayer.MainFrame;
+import videoPlayer.VideoPane;
+
 public class BgMerge extends SwingWorker<Void, Integer> {
 
 	private String name;
@@ -72,7 +75,14 @@ public class BgMerge extends SwingWorker<Void, Integer> {
 	
 	@Override
 	protected void done() {
-		JOptionPane.showMessageDialog(progress, name +".avi has been saved to VideoFiles.");
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		dialogButton = JOptionPane.showConfirmDialog (progress, name + ".avi has been saved to VideoFiles" +
+				"Would you like to play it now?", "alert", dialogButton);
+		if(dialogButton == JOptionPane.YES_OPTION) {
+			VideoPane.setCurrentVideoPath(System.getProperty("user.dir") + "/VideoFiles/" + name + ".avi");
+			MainFrame.initialiseVideo();
+			VideoPane.setPlayBtnIcon();
+		}
 		progress.dispose();
 	}
 }

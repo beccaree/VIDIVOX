@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import universalMethods.Utility;
 
@@ -30,7 +32,7 @@ public class MP3Prompt extends JDialog {
 	 * Create the dialog.
 	 */
 	public MP3Prompt(final String comment) {
-		setBounds(350, 250, 450, 300);
+		setBounds(350, 250, 450, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,16 +60,15 @@ public class MP3Prompt extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		
-		JButton okButton = new JButton("OK");
+		final JButton okButton = new JButton("Make MP3");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = textField.getText();
-				String[] words = name.split(" ");
-				// Check that name is not blank and/or more than 1 word
+				// Check that name is not blank or contains invalid characters, name can only have a-z,A-Z,_,- or 0-9
 				if(name.length() == 0) {
 					JOptionPane.showMessageDialog(thisDialog, "You didn't enter anything.", "Empty name", JOptionPane.ERROR_MESSAGE);
-				} else if (words.length >1) {
-					JOptionPane.showMessageDialog(thisDialog, "You cannot have spaces in a file name.", "Invalid name", JOptionPane.ERROR_MESSAGE);
+				} else if(!Utility.isAlphaNumeric(name)) {
+					JOptionPane.showMessageDialog(thisDialog, "File name can only contain alphanumeric characters. (a-z,A-Z,0-9)", "Invalid name", JOptionPane.ERROR_MESSAGE);
 				} else {
 					// Check if name already exists
 					File newMP3 = new File("MP3Files/" + name + ".mp3");
@@ -85,8 +86,30 @@ public class MP3Prompt extends JDialog {
 			}
 		});
 		okButton.setActionCommand("OK");
+		okButton.setEnabled(false);
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
+		
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				// Make sure textField is none empty
+				if(textField.getText().length() > 0) {
+					okButton.setEnabled(true);
+				} else {
+					okButton.setEnabled(false);
+				}
+			}
+			public void removeUpdate(DocumentEvent e) {
+				// Make sure textField is none empty
+				if(textField.getText().length() > 0) {
+					okButton.setEnabled(true);
+				} else {
+					okButton.setEnabled(false);
+				}
+			}
+			public void changedUpdate(DocumentEvent e) {
+			}
+		});
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {

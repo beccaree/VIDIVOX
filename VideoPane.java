@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,12 +34,14 @@ public class VideoPane extends JPanel {
 	
 	protected static MediaPlayer video;
 	protected static String currentVideoPath;
+	protected static int skipInterval = 5;
+	protected static Icon pauseIcon;
 	
 	protected static boolean playClicked = true;
 	protected boolean muteClicked = false;
 	protected static boolean stopForward = false;
 
-	public VideoPane(String videoPath, JFrame parent) {
+	public VideoPane(String videoPath, JFrame parent, Color theme) {
 		
 		// Left side of the split pane
 		setLayout(new BorderLayout());
@@ -60,7 +63,7 @@ public class VideoPane extends JPanel {
 		progress.add(lblTime);
 				
 		bar = new JProgressBar(); // Shows the progress of the video (GUI)
-		bar.setForeground(Color.pink);
+		bar.setForeground(theme);
 		progress.add(bar);
 
 		JPanel video_control = new JPanel(); // Holds all the video control buttons (in controls Panel)
@@ -69,20 +72,21 @@ public class VideoPane extends JPanel {
 				
 		// Initialize all the buttons in video_control Panel
 		JButton btnSkipBack = new JButton();
-		btnSkipBack.setIcon(new ImageIcon("buttons/skipb.png"));
+		btnSkipBack.setIcon(new ImageIcon(getClass().getResource("/buttons/skipb.png")));
 		JButton btnRewind = new JButton();
-		btnRewind.setIcon(new ImageIcon("buttons/rewind.png"));
+		btnRewind.setIcon(new ImageIcon(getClass().getResource("/buttons/rewind.png")));
 		btnPlay = new JButton();
-		btnPlay.setIcon(new ImageIcon("buttons/pause.png"));
+		pauseIcon = new ImageIcon(getClass().getResource("/buttons/pause.png"));
+		btnPlay.setIcon(pauseIcon);
 		JButton btnForward = new JButton();
-		btnForward.setIcon(new ImageIcon("buttons/forward.png"));
+		btnForward.setIcon(new ImageIcon(getClass().getResource("/buttons/forward.png")));
 		JButton btnSkipForward = new JButton();
-		btnSkipForward.setIcon(new ImageIcon("buttons/skipf.png"));
+		btnSkipForward.setIcon(new ImageIcon(getClass().getResource("/buttons/skipf.png")));
 				
 		btnSkipBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Skips backward 5 seconds every time it is clicked
-				video.skip(-10000);
+				video.skip(-skipInterval*1000);
 			}
 		});
 		video_control.add(btnSkipBack);
@@ -91,7 +95,7 @@ public class VideoPane extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				// Continues rewinding until user clicks play
 				playClicked = false;
-				btnPlay.setIcon(new ImageIcon("buttons/play.png")); // Set button to play
+				btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png"))); // Set button to play
 				BgForward rewind = new BgForward(-500, video); // Make a new background task
 				rewind.execute();
 			}
@@ -102,13 +106,13 @@ public class VideoPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Play or pause video depending on boolean variable playClicked
 				if(!playClicked) {
-					btnPlay.setIcon(new ImageIcon("buttons/pause.png"));
+					btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/pause.png")));
 					video.play(); // Play the video
 					playClicked = true;
 					stopForward = false;
 					AudioPane.btnMergeAt.setEnabled(false);
 				} else {
-					btnPlay.setIcon(new ImageIcon("buttons/play.png"));
+					btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png")));
 					video.pause(); // Pause the video
 					playClicked = false;
 					AudioPane.btnMergeAt.setEnabled(true);
@@ -121,7 +125,7 @@ public class VideoPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Continues forwarding until user clicks play
 				playClicked = false;
-				btnPlay.setIcon(new ImageIcon("buttons/play.png")); // Set button to play
+				btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png"))); // Set button to play
 				BgForward forward = new BgForward(500, video); // Make a new background task
 				forward.execute();
 			}
@@ -131,7 +135,7 @@ public class VideoPane extends JPanel {
 		btnSkipForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Skips forward 5 seconds every time it is clicked
-				video.skip(10000);
+				video.skip(skipInterval*1000);
 			}
 		});
 		video_control.add(btnSkipForward);
@@ -160,16 +164,16 @@ public class VideoPane extends JPanel {
 		});
 		panel_1.add(slider);
 				
-		btnMute.setIcon(new ImageIcon("buttons/mute.png"));
+		btnMute.setIcon(new ImageIcon(getClass().getResource("/buttons/mute.png")));
 		btnMute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Toggle the mute for the video depending on boolean variable muteClicked
 				if(!muteClicked) {
-					btnMute.setIcon(new ImageIcon("buttons/unmute.png"));
+					btnMute.setIcon(new ImageIcon(getClass().getResource("/buttons/unmute.png")));
 					video.mute(); // Toggles mute
 					muteClicked = true;
 				} else {
-					btnMute.setIcon(new ImageIcon("buttons/mute.png"));
+					btnMute.setIcon(new ImageIcon(getClass().getResource("/buttons/mute.png")));
 					video.mute(); // Toggles mute
 					muteClicked = false;
 				}
@@ -183,7 +187,7 @@ public class VideoPane extends JPanel {
 			public void finished(MediaPlayer mediaPlayer) {
 				// Play button for playing again when video finishes playing
 				playClicked = false;
-				btnPlay.setIcon(new ImageIcon("buttons/play.png"));
+				btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png")));
 				stopForward = true; // For stopping the BgForward SwingWorker implementation (fast forwarding)
 			}
 		});
@@ -219,7 +223,7 @@ public class VideoPane extends JPanel {
 		bar.setMaximum(length);
 	}
 
-	protected static void setCurrentVideoPath(String newPath) {
+	public static void setCurrentVideoPath(String newPath) {
 		// Sets the current video path to the new path
 		currentVideoPath = newPath;
 	}
@@ -229,12 +233,17 @@ public class VideoPane extends JPanel {
 		return currentVideoPath;
 	}
 
-	public static void setPlayBtnIcon(String icon) {
+	public static void setPlayBtnIcon() {
 		// Sets the icon of play button
 		if(!playClicked) {
-			btnPlay.setIcon(new ImageIcon("buttons/pause.png"));
+			btnPlay.setIcon(pauseIcon);
 			playClicked = true;
 		}
+	}
+
+	public static void setSkipInterval(int second) {
+		// Sets the skip interval of video player to user's choice
+		skipInterval = second;
 	}
 	
 }

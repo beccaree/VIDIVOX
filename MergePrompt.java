@@ -100,10 +100,9 @@ public class MergePrompt extends JDialog {
 				// Before merging check that there are no user errors.
 				String name = txtName.getText();
 				audioPath = txtAudioPath.getText();
-				String[] words = name.split(" ");
 				
-				if(words.length > 1) { // If the video name is longer than 1, name cannot have spaces.
-					JOptionPane.showMessageDialog(thisDialog, "You cannot have spaces in a file name.", "Invalid name", JOptionPane.ERROR_MESSAGE);
+				if(!Utility.isAlphaNumeric(name)) { // If the video name contains invalid characters
+					JOptionPane.showMessageDialog(thisDialog, "File name can only contain alphanumeric characters. (a-z,A-Z,0-9)", "Invalid name", JOptionPane.ERROR_MESSAGE);
 				} else if(name.length() == 0) {
 					JOptionPane.showMessageDialog(thisDialog, "You have not entered a file name.", "Empty name", JOptionPane.ERROR_MESSAGE);
 				} else if(!Utility.isMp3(audioPath)) { // The file chosen is not an audio file.

@@ -1,5 +1,7 @@
 package videoPlayer;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -16,7 +18,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame(String videoPath) {
+	public MainFrame(String videoPath, Color theme) {
 		setTitle("VIDIVOX - Video/Audio Overlay Platform");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 50, 1000, 650);
@@ -26,10 +28,10 @@ public class MainFrame extends JFrame {
 		setJMenuBar(menuBar);
 		
 		// Video player implementation -------------------------------------------------->
-		JPanel videoPane = new VideoPane(videoPath, this);
+		JPanel videoPane = new VideoPane(videoPath, this, theme);
 		
 		// Audio editing implementation ------------------------------------------------->
-		JPanel audioPane = new AudioPane(this);
+		JPanel audioPane = new AudioPane(this, theme);
 				
 				
 		// Adding the two different panels to the two sides of the split pane ----------->
@@ -43,19 +45,18 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 		
 		VideoPane.setCurrentVideoPath(videoPath);
-		VideoPane.video.playMedia(VideoPane.getCurrentVideoPath()); // Play the video
-
+		
 		initialiseVideo();
 	}
 	
-	protected static void initialiseVideo() {
-		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
+	public static void initialiseVideo() {
+		VideoPane.video.playMedia(VideoPane.getCurrentVideoPath()); // Play the video
 		// Sets the progress bar to the length of the current video
 		final int[] vidLength = {0}; // Initialize as array so final value can be changed
 		while(vidLength[0] == 0) {
 			vidLength[0] = (int)((VideoPane.video.getLength())/1000);
 		}
-				
 		VideoPane.setMaxBar(vidLength[0]);
+		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
 	}
 }

@@ -33,21 +33,22 @@ public class AudioPane extends JPanel {
 	
 	protected static JButton btnMergeAt;
 	
-	public AudioPane(final JFrame parent) {
+	public AudioPane(final JFrame parent, Color theme) {
 		setMinimumSize(new Dimension(300, 500));
 		setBackground(Color.DARK_GRAY);
 		setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel lblEnterYourCommentary = new JLabel("Enter Commentary here: (max 40)"); // Label to tell user what the text area is for
+		JLabel lblEnterYourCommentary = new JLabel("Enter Commentary here: (max 40 words)"); // Label to tell user what the text area is for
 		lblEnterYourCommentary.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblEnterYourCommentary.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEnterYourCommentary.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		lblEnterYourCommentary.setForeground(Color.pink);
+		lblEnterYourCommentary.setForeground(theme);
 		add(lblEnterYourCommentary);
 				
 		final JTextArea txtrCommentary = new JTextArea(); // TextArea for user to enter their commentary
 		txtrCommentary.setRows(5);
 		txtrCommentary.setLineWrap(true);
+		txtrCommentary.setWrapStyleWord(true);
 		add(txtrCommentary);
 		
 		JPanel audio_options = new JPanel();
@@ -86,6 +87,7 @@ public class AudioPane extends JPanel {
 				}
 			}
 		});
+		btnStop.setEnabled(false);
 		audio_options.add(btnStop);
 		
 		// Save input in text area as .wav file and convert it to an .mp3
@@ -113,18 +115,22 @@ public class AudioPane extends JPanel {
 			public void insertUpdate(DocumentEvent e) {
 				if(txtrCommentary.getText().length() > 0) {
 					btnSpeak.setEnabled(true);
+					btnStop.setEnabled(true);
 					btnSaveAs.setEnabled(true);
 				} else {
 					btnSpeak.setEnabled(false);
+					btnStop.setEnabled(false);
 					btnSaveAs.setEnabled(false);
 				}
 			}
 			public void removeUpdate(DocumentEvent e) {
 				if(txtrCommentary.getText().length() > 0) {
 					btnSpeak.setEnabled(true);
+					btnStop.setEnabled(true);
 					btnSaveAs.setEnabled(true);
 				} else {
 					btnSpeak.setEnabled(false);
+					btnStop.setEnabled(false);
 					btnSaveAs.setEnabled(false);
 				}
 			}
@@ -149,7 +155,7 @@ public class AudioPane extends JPanel {
 		merge_Panel.add(btnMergeBegin);
 		
 		JLabel lblPauseFirst = new JLabel("Please pause video at desired position");
-		lblPauseFirst.setForeground(Color.pink);
+		lblPauseFirst.setForeground(theme);
 		merge_Panel.add(lblPauseFirst);
 		
 		// Let user select an .mp3 file to merge into any point of current video

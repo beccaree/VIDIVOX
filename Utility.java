@@ -19,27 +19,6 @@ import merge.WaitProcessBar;
  * Class contains necessary methods for completing actions in MainFrame and StartFrame
  */
 public class Utility {
-	
-	public static void merge(String name, String videoPath, String audioPath, int time) {
-		// User sees progress bar while video and audio are merging in the background
-		JFrame wait = new WaitProcessBar();
-		wait.setVisible(true);
-		
-		// Do all the merging
-		
-		//checking that it works with fake merging
-		for(int i = 0; i<10; i++) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		// Close the wait frame
-		wait.dispose();
-	}
 
 	public static boolean isVideo(String path) {
 		
@@ -112,6 +91,14 @@ public class Utility {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static boolean isAlphaNumeric(String s){
+	    String pattern= "^[a-zA-Z0-9]*$";
+	    if(s.matches(pattern)){
+	        return true;
+	    }
+	    return false;   
 	}
 	
 	/**
