@@ -28,13 +28,13 @@ public class MergingInfo extends JFrame {
 	 */
 	public MergingInfo() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(350, 250, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel title_panel = new JPanel();
+		title_panel.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(title_panel, BorderLayout.NORTH);
 		
 		JLabel lblTitle = new JLabel("How To Merge");
@@ -51,13 +51,18 @@ public class MergingInfo extends JFrame {
 		buttons_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		final JLabel lblSubtitle = new JLabel("Merging audio at the beginning");
-		final JTextArea textArea = new JTextArea("Instructions plz thx");
+		// Explanations begin with \n for foramtting reasons (looks better)
+		final JTextArea textArea = new JTextArea("\nSimply click this button, and fill in all options for the 'Merge' button to become enabled.\n"
+				+ "This will merge your chosen audio file at the beginning of the video, the merge functions of this program will automatically overlap the original auido of the video.\n"
+				+ "This video is then saved in a folder named VideoFiles.");
 		
 		JButton btnMergeAudioAt = new JButton("Merge Audio at Beginning");
 		btnMergeAudioAt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				lblSubtitle.setText("Merging audio at the beginning");
-				// change explanation
+				textArea.setText("\nSimply click this button, and fill in all options for the 'Merge' button to become enabled.\n"
+						+ "This will merge your chosen audio file at the beginning of the video, the merge functions of this program will automatically overlap the original auido of the video.\n"
+						+ "This video is then saved in a folder named VideoFiles.");
 			}
 		});
 		buttons_panel.add(btnMergeAudioAt);
@@ -66,22 +71,27 @@ public class MergingInfo extends JFrame {
 		btnMergeAudioHere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Merging audio at any point");
-				//change explanation
+				textArea.setText("\nFor this button to become enabled, the video that is currently playing must be paused.\n"
+						+ "Once the video is paused, the merge function with merge the chosen audio at the point where the video is paused at, "
+						+ "so please ensure that the video is paused at your desired position.\n"
+						+ "This video is then saved in a folder named VideoFiles.");
 			}
 		});
 		buttons_panel.add(btnMergeAudioHere);
 		
 		JPanel explain_panel = new JPanel();
+		explain_panel.setBackground(Color.LIGHT_GRAY);
 		explain_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		bottom.add(explain_panel);
 		explain_panel.setLayout(new BorderLayout(0, 0));
 		
-		lblSubtitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		explain_panel.add(lblSubtitle, BorderLayout.NORTH);
 		
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
+		textArea.setBackground(Color.LIGHT_GRAY);
+		textArea.setForeground(Color.BLACK);
 		explain_panel.add(textArea);
 	}
 

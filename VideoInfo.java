@@ -26,13 +26,13 @@ public class VideoInfo extends JFrame {
 	 */
 	public VideoInfo() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(350, 250, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
 		JPanel title_panel = new JPanel();
+		title_panel.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(title_panel, BorderLayout.NORTH);
 		
 		JLabel lblTitle = new JLabel("How To Video Control");
@@ -49,14 +49,14 @@ public class VideoInfo extends JFrame {
 		buttons_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		final JLabel lblSubtitle = new JLabel("Playing and pausing the video");
-		final JTextArea textArea = new JTextArea("This button allows you to play and pause the video, you can only merge at certain points when you pause the video");
+		final JTextArea textArea = new JTextArea("\nThis button allows you to play and pause the video, you are only allowed to merge at certain points when the video is paused.");
 		
 		JButton btnSkipb = new JButton();
 		btnSkipb.setIcon(new ImageIcon(getClass().getResource("/buttons/skipb.png")));
 		btnSkipb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				lblSubtitle.setText("Skipping back in intervals");
-				textArea.setText("This button allows you to skip backwards in the video, you can choose to set the interval at which it skips at by going to Edit>Set Skip Interval to...");
+				textArea.setText("\nThis button allows you to skip backwards in the video, you can choose to set the interval at which it skips at by going to Edit>Set Skip Interval to...");
 			}
 		});
 		buttons_panel.add(btnSkipb);
@@ -66,7 +66,7 @@ public class VideoInfo extends JFrame {
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Rewinding the video");
-				//change explanation
+				textArea.setText("\nThis button allows you to rewind the video, once this is clicked, it will only stop when the play button is clicked, or if the video reaches the beginning.");
 			}
 		});
 		buttons_panel.add(btnRewind);
@@ -76,7 +76,7 @@ public class VideoInfo extends JFrame {
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Playing and pausing the video");
-				textArea.setText("This button allows you to play and pause the video, you can only merge at certain points when you pause the video");
+				textArea.setText("\nThis button allows you to play and pause the video, you are only allowed to merge at certain points when the video is paused.");
 			}
 		});
 		buttons_panel.add(btnPlay);
@@ -86,7 +86,7 @@ public class VideoInfo extends JFrame {
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Fast Forwarding the video");
-				//change explanation
+				textArea.setText("\nThis button allows you to fast forward the video, once this is clicked, it will only stop when the play button is clicked, or if the video reaches the end.");
 			}
 		});
 		buttons_panel.add(btnForward);
@@ -96,7 +96,7 @@ public class VideoInfo extends JFrame {
 		btnSkipf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Skipping Forwards in intervals");
-				//change explanation
+				textArea.setText("\nThis button allows you to skip forwards in the video, you can choose to set the interval at which it skips at by going to Edit>Set Skip Interval to...");
 			}
 		});
 		buttons_panel.add(btnSkipf);
@@ -106,22 +106,24 @@ public class VideoInfo extends JFrame {
 		btnSound.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Sound controls of the video");
-				//change explanation
+				textArea.setText("\nThis button allows you to mute and unmute the video that is currently playing.\n Next to this is a slider which controls the volume of video.");
 			}
 		});
 		buttons_panel.add(btnSound);
 		
 		JPanel explain_panel = new JPanel();
+		explain_panel.setBackground(Color.LIGHT_GRAY);
 		explain_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		bottom.add(explain_panel);
 		explain_panel.setLayout(new BorderLayout(0, 0));
 		
-		lblSubtitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		explain_panel.add(lblSubtitle, BorderLayout.NORTH);
 		
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
+		textArea.setBackground(Color.LIGHT_GRAY);
+		textArea.setForeground(Color.BLACK);
 		explain_panel.add(textArea, BorderLayout.CENTER);
 	}
 }
