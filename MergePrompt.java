@@ -36,7 +36,7 @@ public class MergePrompt extends JDialog {
 	 * Create the dialog.
 	 */
 	public MergePrompt(final long time) {
-		setBounds(350, 250, 485, 280);
+		setBounds(350, 250, 485, 270);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -55,10 +55,10 @@ public class MergePrompt extends JDialog {
 		lblVideoName.setBounds(50, 41, 200, 50);
 		contentPanel.add(lblVideoName);
 		
-		final JTextField txtName = new JTextField();
+		final JTextField txtName = new JTextField("myVideo" + Utility.fileNumber("./VideoFiles"));
 		txtName.setBounds(255, 58, 100, 20);
 		contentPanel.add(txtName);
-		txtName.setColumns(10);
+		txtName.setColumns(15);
 		
 		JLabel lblVideoToBe = new JLabel("The Audio will be merged with the current video.");
 		lblVideoToBe.setHorizontalAlignment(SwingConstants.CENTER);

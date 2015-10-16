@@ -93,7 +93,7 @@ public class Utility {
 		
 	}
 	
-	public static boolean isAlphaNumeric(String s){
+	public static boolean isAlphaNumeric(String s) {
 	    String pattern= "^[a-zA-Z0-9]*$";
 	    if(s.matches(pattern)){
 	        return true;
@@ -101,12 +101,17 @@ public class Utility {
 	    return false;   
 	}
 	
+	public static int fileNumber(String folderPath) {
+		
+		return new File(folderPath).listFiles().length;
+	}
+	
 	/**
 	 * Starts building a process for any BASH command passed in
 	 * @param cmd
 	 * @throws IOException
 	 */
-	private static void startProcess(String cmd) throws IOException{
+	private static void startProcess(String cmd) throws IOException {
 		ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
 		builder.start();
 	}

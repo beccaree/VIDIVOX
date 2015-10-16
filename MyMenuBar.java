@@ -1,5 +1,9 @@
 package videoPlayer;
 
+import info.AudioInfo;
+import info.MergingInfo;
+import info.VideoInfo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -67,6 +71,7 @@ public class MyMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 5 seconds
 				VideoPane.setSkipInterval(5);
+				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 5 seconds.");
 			}
 		});
 		mnSkip.add(mntmInterval5);
@@ -76,6 +81,7 @@ public class MyMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 10 seconds
 				VideoPane.setSkipInterval(10);
+				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 10 seconds.");
 			}
 		});
 		mnSkip.add(mntmInterval10);
@@ -85,6 +91,7 @@ public class MyMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 15 seconds
 				VideoPane.setSkipInterval(15);
+				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 15 seconds.");
 			}
 		});
 		mnSkip.add(mntmInterval15);
@@ -94,6 +101,7 @@ public class MyMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 20 seconds
 				VideoPane.setSkipInterval(20);
+				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 20 seconds.");
 			}
 		});
 		mnSkip.add(mntmInterval20);
@@ -104,8 +112,9 @@ public class MyMenuBar extends JMenuBar {
 		JMenuItem mntmVideo = new JMenuItem("Video Controls");
 		mntmVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Bring up instructions on merging
-				
+				// Bring up instructions on video control
+				VideoInfo vid = new VideoInfo();
+				vid.setVisible(true);
 			}
 		});
 		mnHelp.add(mntmVideo);	
@@ -114,6 +123,8 @@ public class MyMenuBar extends JMenuBar {
 		mntmMerging.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Bring up instructions on merging
+				MergingInfo merge = new MergingInfo();
+				merge.setVisible(true);
 			}
 		});
 		mnHelp.add(mntmMerging);
@@ -121,7 +132,9 @@ public class MyMenuBar extends JMenuBar {
 		JMenuItem mntmCreating = new JMenuItem("Creating an MP3");
 		mntmCreating.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Bring up instructions on merging
+				// Bring up instructions on creating mp3
+				AudioInfo audio = new AudioInfo();
+				audio.setVisible(true);
 			}
 		});
 		mnHelp.add(mntmCreating);

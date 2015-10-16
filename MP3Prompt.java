@@ -32,7 +32,7 @@ public class MP3Prompt extends JDialog {
 	 * Create the dialog.
 	 */
 	public MP3Prompt(final String comment) {
-		setBounds(350, 250, 450, 200);
+		setBounds(350, 250, 450, 220);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,11 +48,11 @@ public class MP3Prompt extends JDialog {
         contentPanel.add(lblNameYour);
         
         JLabel lblMpName = new JLabel("Name:");
-        lblMpName.setBounds(90, 130, 110, 20);
+        lblMpName.setBounds(90, 110, 110, 20);
         contentPanel.add(lblMpName);
         
-        final JTextField textField = new JTextField();
-        textField.setBounds(170, 130, 150, 20);
+        final JTextField textField = new JTextField("myComment" + Utility.fileNumber("./MP3Files"));
+        textField.setBounds(170, 110, 150, 20);
         contentPanel.add(textField);
         textField.setColumns(10);
 		
@@ -86,7 +86,6 @@ public class MP3Prompt extends JDialog {
 			}
 		});
 		okButton.setActionCommand("OK");
-		okButton.setEnabled(false);
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		
