@@ -31,6 +31,7 @@ public class VideoPane extends JPanel {
 	
 	private static JProgressBar bar;
 	private static JButton btnPlay;
+	private static JLabel lblVideoName;
 	
 	protected static MediaPlayer video;
 	protected static String currentVideoPath;
@@ -139,7 +140,17 @@ public class VideoPane extends JPanel {
 			}
 		});
 		video_control.add(btnSkipForward);
-				
+		
+		JPanel video_info = new JPanel();
+		controls.add(video_info);
+		video_info.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblCurrently = new JLabel("Currently Playing: ");
+		video_info.add(lblCurrently);
+		
+		lblVideoName = new JLabel();
+		video_info.add(lblVideoName);
+		
 		JPanel volume_control = new JPanel(); // Holds the volume control buttons (JSlider and Mute button)
 		controls.add(volume_control);
 		volume_control.setLayout(new BorderLayout(0, 0));
@@ -150,11 +161,10 @@ public class VideoPane extends JPanel {
 				
 		JLabel lblVolume = new JLabel("Volume"); // Label to tell user JSlider is for volume control
 		panel_1.add(lblVolume);
-		lblVolume.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		final JButton btnMute = new JButton(); // Initialize btnMute here for use in JSlider actionListener
 		
-		JSlider slider = new JSlider(); // JSlider for volume control
+		final JSlider slider = new JSlider(); // JSlider for volume control
 		slider.addChangeListener(new ChangeListener() {
 		     @Override
 		     public void stateChanged(ChangeEvent e) {
@@ -162,6 +172,10 @@ public class VideoPane extends JPanel {
 		    	 video.setVolume(((JSlider) e.getSource()).getValue());
 		     }
 		});
+		slider.setMajorTickSpacing(50);
+		slider.setMinorTickSpacing(10);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
 		panel_1.add(slider);
 				
 		btnMute.setIcon(new ImageIcon(getClass().getResource("/buttons/mute.png")));
@@ -172,10 +186,12 @@ public class VideoPane extends JPanel {
 					btnMute.setIcon(new ImageIcon(getClass().getResource("/buttons/unmute.png")));
 					video.mute(); // Toggles mute
 					muteClicked = true;
+					slider.setEnabled(false);
 				} else {
 					btnMute.setIcon(new ImageIcon(getClass().getResource("/buttons/mute.png")));
 					video.mute(); // Toggles mute
 					muteClicked = false;
+					slider.setEnabled(true);
 				}
 			}
 		});
@@ -219,8 +235,13 @@ public class VideoPane extends JPanel {
 	}
 	
 	protected static void setMaxBar(int length) {
-		// Sets the maximum length of the progrss bar to length
+		// Sets the maximum length of the progress bar to length
 		bar.setMaximum(length);
+	}
+	
+	protected static void setVideoName(String vidName) {
+		// Sets the name of the currently playing video for the user to see
+		lblVideoName.setText(vidName);
 	}
 
 	public static void setCurrentVideoPath(String newPath) {

@@ -72,7 +72,7 @@ public class MergingInfo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblSubtitle.setText("Merging audio at any point");
 				textArea.setText("\nFor this button to become enabled, the video that is currently playing must be paused.\n"
-						+ "Once the video is paused, the merge function with merge the chosen audio at the point where the video is paused at, "
+						+ "Once the video is paused, the merge function will merge the chosen audio at the point where the video is paused at, "
 						+ "so please ensure that the video is paused at your desired position.\n"
 						+ "This video is then saved in a folder named VideoFiles.");
 			}

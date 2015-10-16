@@ -50,7 +50,8 @@ public class MainFrame extends JFrame {
 	}
 	
 	public static void initialiseVideo() {
-		VideoPane.video.playMedia(VideoPane.getCurrentVideoPath()); // Play the video
+		String vidPath = VideoPane.getCurrentVideoPath();
+		VideoPane.video.playMedia(vidPath); // Play the video
 		// Sets the progress bar to the length of the current video
 		final int[] vidLength = {0}; // Initialize as array so final value can be changed
 		while(vidLength[0] == 0) {
@@ -58,5 +59,6 @@ public class MainFrame extends JFrame {
 		}
 		VideoPane.setMaxBar(vidLength[0]);
 		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
+		VideoPane.setVideoName(vidPath.substring(vidPath.lastIndexOf('/')+1, vidPath.length()));
 	}
 }
