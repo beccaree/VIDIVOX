@@ -306,5 +306,9 @@ public class VideoPane extends JPanel {
 		// Returns video length of current video in seconds
 		return currentVideoLength;
 	}
-	
+
+	public static void setTheme(Color c) {
+		// Changes the theme (color) of the progress bar
+		bar.setForeground(c);
+	}
 }

@@ -29,13 +29,15 @@ public class AudioPane extends JPanel {
 	private ArrayList<Integer> killPID = new ArrayList<Integer>();
 	
 	protected static JButton btnMergeAt;
+	static JLabel lblEnterYourCommentary;
+	static JLabel lblPauseFirst;
 	
 	public AudioPane(final JFrame parent, Color theme) {
 		setMinimumSize(new Dimension(300, 500));
 		setBackground(Color.DARK_GRAY);
 		setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel lblEnterYourCommentary = new JLabel("Enter Commentary here: (max 40 words)"); // Label to tell user what the text area is for
+		lblEnterYourCommentary = new JLabel("Enter Commentary here: (max 40 words)"); // Label to tell user what the text area is for
 		lblEnterYourCommentary.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblEnterYourCommentary.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEnterYourCommentary.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -151,7 +153,7 @@ public class AudioPane extends JPanel {
 		});
 		merge_Panel.add(btnMergeBegin);
 		
-		JLabel lblPauseFirst = new JLabel("Please pause video at desired position");
+		lblPauseFirst = new JLabel("Please pause video at desired position");
 		lblPauseFirst.setForeground(theme);
 		merge_Panel.add(lblPauseFirst);
 		
@@ -167,5 +169,11 @@ public class AudioPane extends JPanel {
 		});
 		btnMergeAt.setEnabled(false);
 		merge_Panel.add(btnMergeAt);
+	}
+	
+	public static void setTheme(Color c) {
+		// Changes the theme (color) of the progress bar
+		lblEnterYourCommentary.setForeground(c);
+		lblPauseFirst.setForeground(c);
 	}
 }

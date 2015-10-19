@@ -4,6 +4,7 @@ import info.AudioInfo;
 import info.MergingInfo;
 import info.VideoInfo;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -106,6 +107,29 @@ public class MyMenuBar extends JMenuBar {
 			}
 		});
 		mnSkip.add(mntmInterval20);
+		
+		JMenu mnColor = new JMenu("Theme...");
+		mnEdit.add(mnColor);
+		
+		JMenuItem mntmPink = new JMenuItem("Pink");
+		mntmPink.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the theme to pink
+				VideoPane.setTheme(Color.pink);
+				AudioPane.setTheme(Color.pink);
+			}
+		});
+		mnColor.add(mntmPink);
+		
+		JMenuItem mntmBlue = new JMenuItem("Blue");
+		mntmBlue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the theme to blue
+				VideoPane.setTheme(Color.cyan);
+				AudioPane.setTheme(Color.cyan);
+			}
+		});
+		mnColor.add(mntmBlue);
 		
 		JMenu mnHelp = new JMenu("Help");
 		add(mnHelp);
