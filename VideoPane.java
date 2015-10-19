@@ -4,9 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,10 +24,13 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import universalMethods.Utility;
+
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
+@SuppressWarnings("serial")
 public class VideoPane extends JPanel {
 	
 	private static JProgressBar bar;
@@ -37,6 +41,7 @@ public class VideoPane extends JPanel {
 	protected static String currentVideoPath;
 	protected static int skipInterval = 5;
 	protected static Icon pauseIcon;
+	private static int currentVideoLength = 0; // In seconds
 	
 	protected static boolean playClicked = true;
 	protected boolean muteClicked = false;
@@ -60,12 +65,29 @@ public class VideoPane extends JPanel {
 		controls.add(progress);
 		progress.setLayout(new BoxLayout(progress, BoxLayout.X_AXIS));
 				
-		final JLabel lblTime = new JLabel("0 s"); // Shows the time in seconds since the start of video (GUI)
+		final JLabel lblTime = new JLabel("0:00"); // Shows the time in seconds since the start of video (GUI)
 		progress.add(lblTime);
 				
 		bar = new JProgressBar(); // Shows the progress of the video (GUI)
+		bar.addMouseListener(new MouseAdapter() {            
+		    public void mouseClicked(MouseEvent e) {
+		    	// http://stackoverflow.com/questions/18146914/get-value-on-clicking-jprogressbar
+
+		        // Retrieves the mouse position relative to the component origin.
+		        int mouseX = e.getX();
+		        // Computes how far along the mouse is relative to the component width then multiply it by the progress bar's maximum value.
+		        int positionClicked = (int)Math.round((((double)mouseX / (double)bar.getWidth()) * bar.getMaximum())*1000); // In Milliseconds
+		        
+		        video.setTime(positionClicked);
+		        bar.setValue(positionClicked/1000);
+
+		   }                                     
+		 });
 		bar.setForeground(theme);
 		progress.add(bar);
+		
+		final JLabel lblTimeLeft = new JLabel("0:00");
+		progress.add(lblTimeLeft);
 
 		JPanel video_control = new JPanel(); // Holds all the video control buttons (in controls Panel)
 		controls.add(video_control);
@@ -95,6 +117,13 @@ public class VideoPane extends JPanel {
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Continues rewinding until user clicks play
+				playClicked = true;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				playClicked = false;
 				btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png"))); // Set button to play
 				BgForward rewind = new BgForward(-500, video); // Make a new background task
@@ -211,8 +240,9 @@ public class VideoPane extends JPanel {
 		// Timer for updating the label and progress bar every half a second
 		Timer timer = new Timer(500, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblTime.setText((video.getTime())/1000+ " s"); // Update the label
-				bar.setValue((int)(video.getTime())/1000); // Update the progress bar
+				lblTime.setText(Utility.toMinColonSec((int)(video.getTime())/1000)); // Update the label
+				lblTimeLeft.setText(Utility.toMinColonSec((int)(currentVideoLength - (video.getTime()/1000))));
+				bar.setValue((int)(video.getTime()/1000)); // Update the progress bar
 				if(video.getLength() == 0) {
 					// If video gets to the start, stop the rewinding
 					stopForward = true;
@@ -265,6 +295,16 @@ public class VideoPane extends JPanel {
 	public static void setSkipInterval(int second) {
 		// Sets the skip interval of video player to user's choice
 		skipInterval = second;
+	}
+
+	public static void setVideoLength(int length) {
+		// Sets the max video field so we can use it in the lblTimeLeft
+		currentVideoLength = length;
+	}
+
+	public static int getVideoLength() {
+		// Returns video length of current video in seconds
+		return currentVideoLength;
 	}
 	
 }

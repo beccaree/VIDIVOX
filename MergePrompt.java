@@ -6,9 +6,11 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -17,7 +19,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 
 import universalMethods.Utility;
 import videoPlayer.VideoPane;
@@ -26,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+@SuppressWarnings("serial")
 public class MergePrompt extends JDialog {
 
 	private String audioPath;
@@ -62,15 +64,15 @@ public class MergePrompt extends JDialog {
 		
 		JLabel lblVideoToBe = new JLabel("The Audio will be merged with the current video.");
 		lblVideoToBe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVideoToBe.setBounds(20, 97, 420, 50);
+		lblVideoToBe.setBounds(20, 82, 420, 50);
 		contentPanel.add(lblVideoToBe);
 		
 		JLabel lblMpToBe = new JLabel("Audio to be merged:");
-		lblMpToBe.setBounds(20, 148, 150, 50);
+		lblMpToBe.setBounds(20, 128, 150, 50);
 		contentPanel.add(lblMpToBe);
 		
 		final JTextField txtAudioPath = new JTextField();
-		txtAudioPath.setBounds(174, 163, 182, 20);
+		txtAudioPath.setBounds(174, 143, 182, 20);
 		contentPanel.add(txtAudioPath);
 		txtAudioPath.setColumns(10);
 		
@@ -88,8 +90,31 @@ public class MergePrompt extends JDialog {
 				}
 			}
 		});
-		btnAudioBrowse.setBounds(366, 162, 89, 23);
+		btnAudioBrowse.setBounds(366, 140, 89, 23);
 		contentPanel.add(btnAudioBrowse);
+		
+		JLabel lblMergeTime = new JLabel("Merge at:");
+		lblMergeTime.setBounds(134, 184, 89, 23);
+		contentPanel.add(lblMergeTime);
+		
+		JLabel lblColon = new JLabel(":");
+		lblColon.setBounds(252, 184, 20, 23);
+		contentPanel.add(lblColon);
+		
+		int secs = (int)(time/1000) % 60;
+		int mins = (int)((time/1000)-secs)/60;
+		
+		SpinnerModel model1 = new SpinnerNumberModel(mins, 0, 59, 1);
+		final JSpinner minuteSpinner = new JSpinner();
+		minuteSpinner.setBounds(209, 186, 40, 20);
+		minuteSpinner.setModel(model1);
+		contentPanel.add(minuteSpinner);
+		
+		SpinnerModel model2 = new SpinnerNumberModel(secs, 0, 59, 1);
+		final JSpinner secondSpinner = new JSpinner();
+		secondSpinner.setBounds(259, 186, 40, 20);
+		secondSpinner.setModel(model2);
+		contentPanel.add(secondSpinner);
 		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -108,16 +133,19 @@ public class MergePrompt extends JDialog {
 				} else if(!Utility.isMp3(audioPath)) { // The file chosen is not an audio file.
 					JOptionPane.showMessageDialog(thisDialog, "The file you have chosen is not an audio file.", "Invalid audio file", JOptionPane.ERROR_MESSAGE);
 				} else {
+					int totalSeconds = (int)minuteSpinner.getValue() * 60 + (int)secondSpinner.getValue();
 					// Check that the video name doesn't already exist
 					File newVideo = new File("VideoFiles/" + name + ".avi");
 					if(newVideo.exists()) {
 						// Display an error dialog
 						JOptionPane.showMessageDialog(thisDialog, "The name you have chosen already exists, please choose another.", "Duplicate name", JOptionPane.ERROR_MESSAGE);
+					} else  if(VideoPane.getVideoLength() < totalSeconds) { // Check that the time chosen does not exceed the video length
+						JOptionPane.showMessageDialog(thisDialog, "Your chosen time exceeds video length, audio cannot be merged.", "Invalid time", JOptionPane.ERROR_MESSAGE);
 					} else {
 						// Merge the videos with current settings
 						WaitProcessBar wait = new WaitProcessBar();
 						wait.setVisible(true);
-						BgMerge merger = new BgMerge(name, VideoPane.getCurrentVideoPath(), audioPath, time, wait);
+						BgMerge merger = new BgMerge(name, VideoPane.getCurrentVideoPath(), audioPath, totalSeconds*1000, wait);
 						merger.execute();
 						thisDialog.dispose();
 					}

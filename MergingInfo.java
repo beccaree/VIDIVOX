@@ -2,8 +2,6 @@ package info;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,13 +10,11 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
+@SuppressWarnings("serial")
 public class MergingInfo extends JFrame {
 
 	private JPanel contentPane;
@@ -51,7 +47,7 @@ public class MergingInfo extends JFrame {
 		buttons_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		final JLabel lblSubtitle = new JLabel("Merging audio at the beginning");
-		// Explanations begin with \n for foramtting reasons (looks better)
+		// Explanations begin with \n for formatting reasons (looks better)
 		final JTextArea textArea = new JTextArea("\nSimply click this button, and fill in all options for the 'Merge' button to become enabled.\n"
 				+ "This will merge your chosen audio file at the beginning of the video, the merge functions of this program will automatically overlap the original auido of the video.\n"
 				+ "This video is then saved in a folder named VideoFiles.");

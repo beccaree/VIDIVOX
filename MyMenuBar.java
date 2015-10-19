@@ -17,6 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import universalMethods.Utility;
 
+@SuppressWarnings("serial")
 public class MyMenuBar extends JMenuBar {
 	
 	public MyMenuBar(final JFrame parent) {

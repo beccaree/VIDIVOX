@@ -8,12 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import merge.WaitProcessBar;
-
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
  * Class contains necessary methods for completing actions in MainFrame and StartFrame
@@ -94,6 +88,7 @@ public class Utility {
 	}
 	
 	public static boolean isAlphaNumeric(String s) {
+		// This returns true if the string contains only alphanumeric characters, else returns false
 	    String pattern= "^[a-zA-Z0-9]*$";
 	    if(s.matches(pattern)){
 	        return true;
@@ -102,10 +97,21 @@ public class Utility {
 	}
 	
 	public static int fileNumber(String folderPath) {
-		
+		// This returns the number of files in the folder
 		return new File(folderPath).listFiles().length;
 	}
 	
+	public static String toMinColonSec(int seconds) {
+		// This method returns the seconds in the correct format (min:sec)
+		int secs = seconds % 60;
+		int mins = (seconds-secs)/60;
+		
+		if(secs > 9) {
+			return mins + ":" + secs;
+		} else {
+			return mins + ":0" + secs;
+		}
+	}
 	/**
 	 * Starts building a process for any BASH command passed in
 	 * @param cmd

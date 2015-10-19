@@ -24,6 +24,7 @@ import java.io.File;
  * @author Rebecca Lee (Isabel Zhuang - prototype)
  * Class that contains user interface and implementation that prompts the user to name their mp3 and video 
  */
+@SuppressWarnings("serial")
 public class MP3Prompt extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

@@ -30,6 +30,7 @@ import videoPlayer.MainFrame;
  * @author Rebecca Lee (Isabel Zhuang - prototype)
  * Class contains implementation and graphical user interface code for the starting frame.
  */
+@SuppressWarnings("serial")
 public class StartFrame extends JFrame {
 
 	private JPanel contentPane;
