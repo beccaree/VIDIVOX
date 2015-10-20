@@ -16,7 +16,10 @@ public class AudioTools {
             bw.write("(Parameter.set 'Duration_Stretch " + speed + ")");
 			
             if(save) {
-				bw.write("(utt.save.wave (SayText \"" + comment + "\") \"./MP3Files/.sound.wav\" 'riff)");
+            	// Piazza 206 post 130
+				bw.write("\n(set! utt1 (Utterance Text \"" + comment + "\"))");
+				bw.write("\n(utt.synth utt1)");
+				bw.write("\n(utt.save.wave utt1 \"./MP3Files/.sound.wav\" 'riff)");
 			} else {
 				bw.write("\n(SayText \"" + comment + "\")");
 			}
@@ -24,11 +27,10 @@ public class AudioTools {
 			bw.close();
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Scheme doesn't work");
+			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("Scheme doesn't work 2");
+			e.printStackTrace();
 		}
 	}
-	
 	
 }

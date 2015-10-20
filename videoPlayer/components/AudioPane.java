@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,8 +20,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -34,12 +38,15 @@ import merge.MergePrompt;
 public class AudioPane extends JPanel {
 	
 	private ArrayList<Integer> killPID = new ArrayList<Integer>();
+	private double talkSpeed;
 	
 	protected static JButton btnMergeAt;
 	private static JButton btnStop;
 	private static JButton btnSpeak;
-	static JLabel lblEnterYourCommentary;
-	static JLabel lblPauseFirst;
+	private static JLabel lblEnterYourCommentary;
+	private static JLabel lblPauseFirst;
+	private static JLabel lblsaveFirst;
+	private static JLabel lblSpeed;
 	
 	public AudioPane(final JFrame parent, Color theme) {
 		setMinimumSize(new Dimension(300, 500));
@@ -59,6 +66,18 @@ public class AudioPane extends JPanel {
 		txtrCommentary.setWrapStyleWord(true);
 		add(txtrCommentary);
 		
+		final JSlider speedChooser = new JSlider(0, 20, 10);
+		speedChooser.addChangeListener(new ChangeListener() {
+		     @Override
+		     public void stateChanged(ChangeEvent e) {
+		     	// Change the volume of the video to the value obtained from the slider
+		    	 talkSpeed = (double)speedChooser.getValue() / 10;
+		    	 if(talkSpeed == 0.0) {
+		    		 talkSpeed = 0.1;
+		    	 }
+		     }
+		});
+		
 		JPanel audio_options = new JPanel();
 		audio_options.setBackground(Color.DARK_GRAY);
 		add(audio_options);
@@ -68,7 +87,7 @@ public class AudioPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Speak commentary to the user through festival text-to-speech
 				killPID.removeAll(killPID);
-				AudioTools.createFestivalScheme(txtrCommentary.getText(), 1.0, false);
+				AudioTools.createFestivalScheme(txtrCommentary.getText(), talkSpeed, false);
 				BgFestival bg = new BgFestival(killPID);
 				bg.execute();
 				btnStop.setEnabled(true);
@@ -83,8 +102,7 @@ public class AudioPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Kill the festival process (Stop speaking)
 				String cmd = "pstree -p " + killPID.get(0);
-				ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c",
-						cmd);
+				ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
 				try {
 					Process process = builder.start();
 					process.waitFor();
@@ -101,8 +119,7 @@ public class AudioPane extends JPanel {
 						try {
 							builder.start();
 							killPID.set(0, 0);
-							btnStop.setEnabled(false);
-							btnSpeak.setEnabled(true);
+							disableCancel();
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
@@ -128,7 +145,7 @@ public class AudioPane extends JPanel {
 	   			
 	   			if (words.length > 0 && words.length <= 40) {
 	   				// Prompt user for what they want to name their mp3 file
-	   				JDialog mp3Name = new MP3Prompt(commentary);
+	   				JDialog mp3Name = new MP3Prompt(commentary, talkSpeed);
 	   				mp3Name.setVisible(true);
 	   			} else {
 	   				JOptionPane.showMessageDialog(parent, "Please only have between 1 and 40 words. Please try again.", "Too many words", JOptionPane.ERROR_MESSAGE);
@@ -137,6 +154,32 @@ public class AudioPane extends JPanel {
 		});
 		btnSaveAs.setEnabled(false);
 		audio_options.add(btnSaveAs);
+		
+		lblSpeed = new JLabel("Talking Speed:");
+		lblSpeed.setForeground(theme);
+		audio_options.add(lblSpeed);
+		
+		speedChooser.setBackground(Color.DARK_GRAY);
+		speedChooser.setPaintLabels(true);
+		
+		// https://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		JLabel lblFast = new JLabel("Fast");
+		lblFast.setForeground(Color.white);
+		labelTable.put( 0, lblFast);
+		JLabel lblNormal = new JLabel("Normal");
+		lblNormal.setForeground(Color.white);
+		labelTable.put( 10, lblNormal);
+		JLabel lblSlow = new JLabel("Slow");
+		lblSlow.setForeground(Color.white);
+		labelTable.put( 20, lblSlow);
+		speedChooser.setLabelTable(labelTable);
+		
+		speedChooser.setPaintTicks(true);
+		speedChooser.setMajorTickSpacing(10);
+		speedChooser.setMajorTickSpacing(1);
+
+		audio_options.add(speedChooser);
 		
 		txtrCommentary.getDocument().addDocumentListener(new DocumentListener() {
 			public void insertUpdate(DocumentEvent e) {
@@ -165,6 +208,10 @@ public class AudioPane extends JPanel {
 		merge_Panel.setBackground(Color.DARK_GRAY);
 		add(merge_Panel);
 		merge_Panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		lblsaveFirst = new JLabel("Save commentary before merging");
+		lblsaveFirst.setForeground(theme);
+		merge_Panel.add(lblsaveFirst);
 		
 		// Let user select an .mp3 file to merge into the beginning of current video
 		JButton btnMergeBegin = new JButton("Merge Audio at Beginning");
@@ -199,6 +246,8 @@ public class AudioPane extends JPanel {
 		// Changes the theme (color) of the progress bar
 		lblEnterYourCommentary.setForeground(c);
 		lblPauseFirst.setForeground(c);
+		lblsaveFirst.setForeground(c);
+		lblSpeed.setForeground(c);
 	}
 
 	public static void disableCancel() {

@@ -53,6 +53,8 @@ public class MyMenuBar extends JMenuBar {
 			}
 		});
 		mnFile.add(mntmOpenNewVideo);
+		
+		// Project save here
 				
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener() {

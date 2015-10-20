@@ -1,12 +1,12 @@
 package universalMethods;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import videoPlayer.BGTasks.AudioTools;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
@@ -60,23 +60,14 @@ public class Utility {
 		return false;
 	}
 	
-	public static void saveAsMp3(String commentary, String name) {
+	public static void saveAsMp3(String commentary, String name, Double speed) {
 		
 		try {
 
-			File file = new File("./MP3Files/.commentary.txt");
-			// If file doesn't exists, then create it
-			if (!file.exists()) {
-				file.createNewFile();
-			}
+			AudioTools.createFestivalScheme(commentary, speed, true);
 
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(commentary);
-			bw.close();
-			
 			// Generate a hidden sound.wav file from the saved user commentary
-			String cmd = "text2wave ./MP3Files/.commentary.txt -o ./MP3Files/.sound.wav;"
+			String cmd = "festival -b ./MP3Files/.festival.scm;"
 					// Create a MP3 file from the sound.wav file
 					+ "ffmpeg -i ./MP3Files/.sound.wav \'./MP3Files/" + name + ".mp3\'";
 			startProcess(cmd);
@@ -112,6 +103,7 @@ public class Utility {
 			return mins + ":0" + secs;
 		}
 	}
+
 	/**
 	 * Starts building a process for any BASH command passed in
 	 * @param cmd

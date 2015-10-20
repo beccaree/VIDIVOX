@@ -32,7 +32,7 @@ public class MP3Prompt extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public MP3Prompt(final String comment) {
+	public MP3Prompt(final String comment, final double speed) {
 		setBounds(350, 250, 450, 220);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -78,7 +78,7 @@ public class MP3Prompt extends JDialog {
 						JOptionPane.showMessageDialog(thisDialog, "The name you have chosen already exists, please choose another.", "Duplicate name", JOptionPane.ERROR_MESSAGE);
 					} else {
 						// Create the MP3 file from the commentary
-						Utility.saveAsMp3(comment, name);
+						Utility.saveAsMp3(comment, name, speed);
 						JOptionPane.showMessageDialog(thisDialog, name + ".mp3 has been created in MP3Files");
 					
 						thisDialog.dispose();
