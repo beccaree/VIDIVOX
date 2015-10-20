@@ -18,6 +18,8 @@ import videoPlayer.components.VideoPane;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
+	private static Color currentTheme;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -25,6 +27,7 @@ public class MainFrame extends JFrame {
 		setTitle("VIDIVOX - Video/Audio Overlay Platform");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 50, 1000, 650);
+		currentTheme = theme;
 		
 		// Top menu bar implementation -------------------------------------------------->
 		JMenuBar menuBar = new MyMenuBar(this);
@@ -64,5 +67,15 @@ public class MainFrame extends JFrame {
 		VideoPane.setVideoLength(vidLength[0]);
 		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
 		VideoPane.setVideoName(vidPath.substring(vidPath.lastIndexOf('/')+1, vidPath.length()));
+	}
+	
+	public static Color getCurrentTheme() {
+		// Returns the current theme color for saving the project
+		return currentTheme;
+	}
+
+	public static void setCurrentTheme(Color c) {
+		// Sets the current theme color when it is changed
+		currentTheme = c;
 	}
 }

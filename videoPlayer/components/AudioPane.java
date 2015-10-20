@@ -38,7 +38,7 @@ import merge.MergePrompt;
 public class AudioPane extends JPanel {
 	
 	private ArrayList<Integer> killPID = new ArrayList<Integer>();
-	private double talkSpeed;
+	private double talkSpeed = 1.0;
 	
 	protected static JButton btnMergeAt;
 	private static JButton btnStop;

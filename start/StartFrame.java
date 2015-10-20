@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
+import java.io.File;
 
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
@@ -43,6 +44,16 @@ public class StartFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		// Create the necessary directories for this program
+		File audio = new File("./MP3Files");
+		audio.mkdirs();
+		
+		File video = new File("./VideoFiles");
+		video.mkdirs();
+		
+		File project = new File("./Projects");
+		project.mkdirs();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
