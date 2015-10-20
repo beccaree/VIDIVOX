@@ -23,6 +23,7 @@ public class MergingInfo extends JFrame {
 	 * Create the frame.
 	 */
 	public MergingInfo() {
+		setTitle("Help - Merging Functions");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(350, 250, 450, 300);
 		contentPane = new JPanel();

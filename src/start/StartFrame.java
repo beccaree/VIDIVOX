@@ -70,6 +70,7 @@ public class StartFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public StartFrame() {
+		setTitle("Choose a Video");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 200, 500, 250);
 		contentPane = new JPanel();
@@ -118,6 +119,10 @@ public class StartFrame extends JFrame {
 		
 		final JCheckBox chckbxDefaultVid = new JCheckBox("Use Bunny Video"); // Tick if user wants to use the big buck bunny video
 		panel_2.add(chckbxDefaultVid);
+		File bunny = new File("./VideoFiles/bunny.avi");
+		if(!bunny.exists()) {
+			chckbxDefaultVid.setEnabled(false);
+		}
 		
 		JPanel themeChooser = new JPanel();
 		themeChooser.setLayout(new BoxLayout(themeChooser, BoxLayout.X_AXIS));

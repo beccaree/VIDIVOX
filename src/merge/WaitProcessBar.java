@@ -17,6 +17,7 @@ public class WaitProcessBar extends JFrame {
 	 * Create the frame.
 	 */
 	public WaitProcessBar() {
+		setTitle("Merging in the background");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(350, 300, 500, 120);
 		contentPane = new JPanel();

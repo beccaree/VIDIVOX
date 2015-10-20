@@ -38,6 +38,7 @@ public class MergePrompt extends JDialog {
 	 * Create the dialog.
 	 */
 	public MergePrompt(final long time) {
+		setTitle("Merge an Audio");
 		setBounds(350, 250, 485, 270);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

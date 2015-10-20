@@ -60,6 +60,13 @@ public class Utility {
 		return false;
 	}
 	
+	public static boolean isProject(String path) {
+		String ext = path.substring(path.length() - 3);
+		System.out.println(ext);
+		
+		return ext.equals("vdp");
+	}
+	
 	public static void saveAsMp3(String commentary, String name, Double speed) {
 		
 		try {

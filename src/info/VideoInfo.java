@@ -23,6 +23,7 @@ public class VideoInfo extends JFrame {
 	 * Create the frame.
 	 */
 	public VideoInfo() {
+		setTitle("Help - Video Functions");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(350, 250, 450, 300);
 		contentPane = new JPanel();

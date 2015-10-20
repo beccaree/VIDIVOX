@@ -51,9 +51,7 @@ public class MyMenuBar extends JMenuBar {
 					newPath = videoChooser.getSelectedFile().getPath();
 					if(Utility.isVideo(newPath)) {
 						// Set current video path to new path
-						VideoPane.setCurrentVideoPath(newPath);
-						MainFrame.initialiseVideo();
-						VideoPane.setPlayBtnIcon();
+						updateVideo(newPath);
 					} else {
 						JOptionPane.showMessageDialog(parent, "The file you have chosen is not a video, please try again.");
 					}
@@ -82,13 +80,13 @@ public class MyMenuBar extends JMenuBar {
 						bw.write(VideoPane.getCurrentVideoPath());
 						bw.write("\n" + Integer.toString((MainFrame.getCurrentTheme()).getRGB()));
 						bw.write("\n" + currentSkipInterval);
+						bw.write("\n" + AudioPane.getTextArea());
 						
 						JOptionPane.showMessageDialog(parent, newProjectPath.substring(newProjectPath.lastIndexOf('/')+1, newProjectPath.length()) + " has been saved to the Projects folder");
 						
 						bw.close();
 					} catch (IOException ex) {
-						// TODO Auto-generated catch block
-						ex.printStackTrace();
+						JOptionPane.showMessageDialog(parent, "There was an error saving the file.", "Something went wrong", JOptionPane.ERROR_MESSAGE);
 					}
 				}            
 			}
@@ -106,40 +104,40 @@ public class MyMenuBar extends JMenuBar {
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 					String filePath = projectChooser.getSelectedFile().getPath();
 				  	
-					try {
-						FileReader fr = new FileReader(filePath);
-						BufferedReader br = new BufferedReader(fr);
-						
-						String videoPath = br.readLine();
-						Color theme = new Color(Integer.parseInt(br.readLine()));
-						int skipInterval = Integer.parseInt(br.readLine());
-						
-						// Set current video path to saved path
-						VideoPane.setCurrentVideoPath(videoPath);
-						MainFrame.initialiseVideo();
-						VideoPane.setPlayBtnIcon();
-						
-						// Set current theme to saved theme
-						VideoPane.setTheme(theme);
-						AudioPane.setTheme(theme);
-						MainFrame.setCurrentTheme(theme);
-						
-						//Set current skip interval
-						currentSkipInterval = skipInterval;
-						VideoPane.setSkipInterval(skipInterval);
-						
-						br.close();
-						
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (NumberFormatException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					if (Utility.isProject(filePath)) {
+						try {
+							FileReader fr = new FileReader(filePath);
+							BufferedReader br = new BufferedReader(fr);
+
+							String videoPath = br.readLine();
+							// Set current video path to saved path
+							updateVideo(videoPath);
+							
+							Color theme = new Color(Integer.parseInt(br.readLine()));
+							// Set current theme to saved theme
+							updateTheme(theme);
+							
+							int skipInterval = Integer.parseInt(br.readLine());
+							// Set current skip interval
+							updateSkipInt(skipInterval);
+							
+							String comment = br.readLine();
+							// Set text area to comment saved
+							AudioPane.writeToTextArea(comment);
+
+							br.close();
+
+						} catch (FileNotFoundException e1) {
+							JOptionPane.showMessageDialog(parent, "The file you chose cannot be found, check that it exists.", "File not found", JOptionPane.ERROR_MESSAGE);
+						} catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(parent, "The file you have chosen is in the wrong format, please check that it is a VIDIVOX project file (.vdp)", "Invalid file", JOptionPane.ERROR_MESSAGE);
+						} catch (IOException e1) {
+							JOptionPane.showMessageDialog(parent, "The project file you have chosen could not be loaded.", "Invalid file", JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(parent, "The file you have chosen is in the wrong format, please check that it is a VIDIVOX project file (.vdp)", "Invalid file", JOptionPane.ERROR_MESSAGE);
 					}
+					
 				}
 			}
 		});
@@ -164,8 +162,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmInterval5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 5 seconds
-				currentSkipInterval = 5;
-				VideoPane.setSkipInterval(5);
+				updateSkipInt(5);
 				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 5 seconds.");
 			}
 		});
@@ -175,8 +172,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmInterval10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 10 seconds
-				currentSkipInterval = 10;
-				VideoPane.setSkipInterval(10);
+				updateSkipInt(10);
 				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 10 seconds.");
 			}
 		});
@@ -186,8 +182,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmInterval15.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 15 seconds
-				currentSkipInterval = 15;
-				VideoPane.setSkipInterval(15);
+				updateSkipInt(15);
 				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 15 seconds.");
 			}
 		});
@@ -197,8 +192,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmInterval20.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the interval to 20 seconds
-				currentSkipInterval = 20;
-				VideoPane.setSkipInterval(20);
+				updateSkipInt(20);
 				JOptionPane.showMessageDialog(parent, "The skip interval has been set to 20 seconds.");
 			}
 		});
@@ -211,9 +205,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmPink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the theme to pink
-				VideoPane.setTheme(Color.pink);
-				AudioPane.setTheme(Color.pink);
-				MainFrame.setCurrentTheme(Color.pink);
+				updateTheme(Color.pink);
 			}
 		});
 		mnColor.add(mntmPink);
@@ -222,9 +214,7 @@ public class MyMenuBar extends JMenuBar {
 		mntmBlue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the theme to blue
-				VideoPane.setTheme(Color.cyan);
-				AudioPane.setTheme(Color.cyan);
-				MainFrame.setCurrentTheme(Color.cyan);
+				updateTheme(Color.cyan);
 			}
 		});
 		mnColor.add(mntmBlue);
@@ -263,4 +253,22 @@ public class MyMenuBar extends JMenuBar {
 		mnHelp.add(mntmCreating);
 	}
 
+	protected void updateTheme(Color c) {
+		// Update theme in other components
+		VideoPane.setTheme(c);
+		AudioPane.setTheme(c);
+		MainFrame.setCurrentTheme(c);
+	}
+	
+	protected void updateSkipInt(int skip) {
+		// Update skip interval
+		currentSkipInterval = skip;
+		VideoPane.setSkipInterval(skip);
+	}
+	
+	protected void updateVideo(String path) {
+		VideoPane.setCurrentVideoPath(path);
+		MainFrame.initialiseVideo();
+		VideoPane.setPlayBtnIcon();
+	}
 }

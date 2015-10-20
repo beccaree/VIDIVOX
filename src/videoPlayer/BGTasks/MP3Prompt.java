@@ -33,6 +33,7 @@ public class MP3Prompt extends JDialog {
 	 * Create the dialog.
 	 */
 	public MP3Prompt(final String comment, final double speed) {
+		setTitle("Creating an MP3");
 		setBounds(350, 250, 450, 220);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());

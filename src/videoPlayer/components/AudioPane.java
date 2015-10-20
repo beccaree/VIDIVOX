@@ -40,6 +40,8 @@ public class AudioPane extends JPanel {
 	private ArrayList<Integer> killPID = new ArrayList<Integer>();
 	private double talkSpeed = 1.0;
 	
+	private static JTextArea txtrCommentary;
+	
 	protected static JButton btnMergeAt;
 	private static JButton btnStop;
 	private static JButton btnSpeak;
@@ -60,7 +62,7 @@ public class AudioPane extends JPanel {
 		lblEnterYourCommentary.setForeground(theme);
 		add(lblEnterYourCommentary);
 				
-		final JTextArea txtrCommentary = new JTextArea(); // TextArea for user to enter their commentary
+		txtrCommentary = new JTextArea(); // TextArea for user to enter their commentary
 		txtrCommentary.setRows(5);
 		txtrCommentary.setLineWrap(true);
 		txtrCommentary.setWrapStyleWord(true);
@@ -77,6 +79,7 @@ public class AudioPane extends JPanel {
 		    	 }
 		     }
 		});
+		speedChooser.setEnabled(false);
 		
 		JPanel audio_options = new JPanel();
 		audio_options.setBackground(Color.DARK_GRAY);
@@ -186,18 +189,22 @@ public class AudioPane extends JPanel {
 				if(txtrCommentary.getText().length() > 0) {
 					btnSpeak.setEnabled(true);
 					btnSaveAs.setEnabled(true);
+					speedChooser.setEnabled(true);
 				} else {
 					btnSpeak.setEnabled(false);
 					btnSaveAs.setEnabled(false);
+					speedChooser.setEnabled(false);
 				}
 			}
 			public void removeUpdate(DocumentEvent e) {
 				if(txtrCommentary.getText().length() > 0) {
 					btnSpeak.setEnabled(true);
 					btnSaveAs.setEnabled(true);
+					speedChooser.setEnabled(true);
 				} else {
 					btnSpeak.setEnabled(false);
 					btnSaveAs.setEnabled(false);
+					speedChooser.setEnabled(false);
 				}
 			}
 			public void changedUpdate(DocumentEvent e) {
@@ -254,5 +261,13 @@ public class AudioPane extends JPanel {
 		// Disables the cancel button when the festival process is done
 		btnStop.setEnabled(false);
 		btnSpeak.setEnabled(true);
+	}
+	
+	public static String getTextArea() {
+		return txtrCommentary.getText();
+	}
+	
+	public static void writeToTextArea(String comment) {
+		txtrCommentary.setText(comment);
 	}
 }

@@ -22,6 +22,7 @@ public class AudioInfo extends JFrame {
 	 * Create the frame.
 	 */
 	public AudioInfo() {
+		setTitle("Help - Audio Functions");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(350, 250, 450, 300);
 		contentPane = new JPanel();
