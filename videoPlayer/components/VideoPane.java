@@ -1,4 +1,4 @@
-package videoPlayer;
+package videoPlayer.components;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,6 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import universalMethods.Utility;
+import videoPlayer.BGTasks.BgForward;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -37,15 +38,15 @@ public class VideoPane extends JPanel {
 	private static JButton btnPlay;
 	private static JLabel lblVideoName;
 	
-	protected static MediaPlayer video;
+	public static MediaPlayer video;
 	protected static String currentVideoPath;
 	protected static int skipInterval = 5;
 	protected static Icon pauseIcon;
 	private static int currentVideoLength = 0; // In seconds
 	
-	protected static boolean playClicked = true;
+	public static boolean playClicked = true;
 	protected boolean muteClicked = false;
-	protected static boolean stopForward = false;
+	public static boolean stopForward = false;
 
 	public VideoPane(String videoPath, JFrame parent, Color theme) {
 		
@@ -264,12 +265,12 @@ public class VideoPane extends JPanel {
 		});
 	}
 	
-	protected static void setMaxBar(int length) {
+	public static void setMaxBar(int length) {
 		// Sets the maximum length of the progress bar to length
 		bar.setMaximum(length);
 	}
 	
-	protected static void setVideoName(String vidName) {
+	public static void setVideoName(String vidName) {
 		// Sets the name of the currently playing video for the user to see
 		lblVideoName.setText(vidName);
 	}

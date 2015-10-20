@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import videoPlayer.MainFrame;
-import videoPlayer.VideoPane;
+import videoPlayer.components.VideoPane;
 
 public class BgMerge extends SwingWorker<Void, Integer> {
 

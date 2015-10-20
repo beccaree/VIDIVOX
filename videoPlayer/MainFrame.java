@@ -7,6 +7,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import videoPlayer.components.AudioPane;
+import videoPlayer.components.MyMenuBar;
+import videoPlayer.components.VideoPane;
+
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
  * This class contains all the user interface implementation and functionality of the video player.

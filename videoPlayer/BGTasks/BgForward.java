@@ -1,4 +1,4 @@
-package videoPlayer;
+package videoPlayer.BGTasks;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -6,6 +6,7 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import videoPlayer.components.VideoPane;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)

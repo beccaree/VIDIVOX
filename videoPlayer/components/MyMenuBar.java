@@ -1,4 +1,4 @@
-package videoPlayer;
+package videoPlayer.components;
 
 import info.AudioInfo;
 import info.MergingInfo;
@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import universalMethods.Utility;
+import videoPlayer.MainFrame;
 
 @SuppressWarnings("serial")
 public class MyMenuBar extends JMenuBar {

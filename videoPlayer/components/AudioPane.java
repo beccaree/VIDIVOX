@@ -1,4 +1,4 @@
-package videoPlayer;
+package videoPlayer.components;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -7,7 +7,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -21,6 +24,10 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import videoPlayer.BGTasks.AudioTools;
+import videoPlayer.BGTasks.BgFestival;
+import videoPlayer.BGTasks.MP3Prompt;
+
 import merge.MergePrompt;
 
 @SuppressWarnings("serial")
@@ -29,6 +36,8 @@ public class AudioPane extends JPanel {
 	private ArrayList<Integer> killPID = new ArrayList<Integer>();
 	
 	protected static JButton btnMergeAt;
+	private static JButton btnStop;
+	private static JButton btnSpeak;
 	static JLabel lblEnterYourCommentary;
 	static JLabel lblPauseFirst;
 	
@@ -54,36 +63,55 @@ public class AudioPane extends JPanel {
 		audio_options.setBackground(Color.DARK_GRAY);
 		add(audio_options);
 		
-		final JButton btnSpeak = new JButton("Speak");
+		btnSpeak = new JButton("Speak");
 		btnSpeak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Speak commentary to the user through festival text-to-speech
-				String input = txtrCommentary.getText();
-				BgFestival bg = new BgFestival(input, killPID);
+				killPID.removeAll(killPID);
+				AudioTools.createFestivalScheme(txtrCommentary.getText(), 1.0, false);
+				BgFestival bg = new BgFestival(killPID);
 				bg.execute();
-				killPID.removeAll(killPID);		
+				btnStop.setEnabled(true);
+				btnSpeak.setEnabled(false);
 			}
 		});
 		btnSpeak.setEnabled(false);
 		audio_options.add(btnSpeak);
 		
-		final JButton btnStop = new JButton("Stop");
+		btnStop = new JButton("Stop");
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Kill the festival process (Stop speaking)
-				if (!killPID.isEmpty()) {
-					if (killPID.get(0) != 0) {
-						int festID = killPID.get(0)+4;
-						String cmd = "kill " + festID;
-						ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
+				String cmd = "pstree -p " + killPID.get(0);
+				ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c",
+						cmd);
+				try {
+					Process process = builder.start();
+					process.waitFor();
+
+					InputStream stdout = process.getInputStream();
+					BufferedReader stdoutbr = new BufferedReader(new InputStreamReader(stdout));
+
+					String line = stdoutbr.readLine();
+
+					if (line != null) {
+						String festID = line.substring(line.indexOf("play(") + 5, line.indexOf(")---{play}"));
+						cmd = "kill -9 " + festID;
+						builder = new ProcessBuilder("/bin/bash", "-c", cmd);
 						try {
 							builder.start();
 							killPID.set(0, 0);
+							btnStop.setEnabled(false);
+							btnSpeak.setEnabled(true);
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
 					}
+
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
+				
 			}
 		});
 		btnStop.setEnabled(false);
@@ -114,22 +142,18 @@ public class AudioPane extends JPanel {
 			public void insertUpdate(DocumentEvent e) {
 				if(txtrCommentary.getText().length() > 0) {
 					btnSpeak.setEnabled(true);
-					btnStop.setEnabled(true);
 					btnSaveAs.setEnabled(true);
 				} else {
 					btnSpeak.setEnabled(false);
-					btnStop.setEnabled(false);
 					btnSaveAs.setEnabled(false);
 				}
 			}
 			public void removeUpdate(DocumentEvent e) {
 				if(txtrCommentary.getText().length() > 0) {
 					btnSpeak.setEnabled(true);
-					btnStop.setEnabled(true);
 					btnSaveAs.setEnabled(true);
 				} else {
 					btnSpeak.setEnabled(false);
-					btnStop.setEnabled(false);
 					btnSaveAs.setEnabled(false);
 				}
 			}
@@ -175,5 +199,11 @@ public class AudioPane extends JPanel {
 		// Changes the theme (color) of the progress bar
 		lblEnterYourCommentary.setForeground(c);
 		lblPauseFirst.setForeground(c);
+	}
+
+	public static void disableCancel() {
+		// Disables the cancel button when the festival process is done
+		btnStop.setEnabled(false);
+		btnSpeak.setEnabled(true);
 	}
 }

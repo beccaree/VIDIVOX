@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import universalMethods.Utility;
-import videoPlayer.VideoPane;
+import videoPlayer.components.VideoPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
