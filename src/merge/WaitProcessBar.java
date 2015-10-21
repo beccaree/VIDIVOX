@@ -7,11 +7,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JProgressBar;
 
+/**
+ * @author Rebecca Lee
+ * Class to inform user the progress of their merging process. 
+ */
 @SuppressWarnings("serial")
 public class WaitProcessBar extends JFrame {
 
 	private JPanel contentPane;
-	protected JProgressBar progressBar; // Allow the process to update the progress bar
+	protected JProgressBar progressBar; // Allow the BgMerge process to update the progress bar
 
 	/**
 	 * Create the frame.
@@ -36,6 +40,7 @@ public class WaitProcessBar extends JFrame {
 	}
 	
 	protected void updateProgress(int i) {
+		// Sets the value of the progress bar
 		progressBar.setValue(i);
 	}
 }
