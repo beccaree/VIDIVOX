@@ -62,7 +62,6 @@ public class Utility {
 	
 	public static boolean isProject(String path) {
 		String ext = path.substring(path.length() - 3);
-		System.out.println(ext);
 		
 		return ext.equals("vdp");
 	}

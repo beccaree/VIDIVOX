@@ -83,7 +83,7 @@ public class VideoPane extends JPanel {
 		        bar.setValue(positionClicked/1000);
 
 		   }                                     
-		 });
+		});
 		bar.setForeground(theme);
 		progress.add(bar);
 		

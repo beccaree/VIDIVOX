@@ -7,10 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -31,6 +27,7 @@ import javax.swing.event.DocumentListener;
 import videoPlayer.BGTasks.AudioTools;
 import videoPlayer.BGTasks.BgFestival;
 import videoPlayer.BGTasks.MP3Prompt;
+import videoPlayer.components.actionListeners.StopListener;
 
 import merge.MergePrompt;
 
@@ -101,39 +98,7 @@ public class AudioPane extends JPanel {
 		audio_options.add(btnSpeak);
 		
 		btnStop = new JButton("Stop");
-		btnStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Kill the festival process (Stop speaking)
-				String cmd = "pstree -p " + killPID.get(0);
-				ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
-				try {
-					Process process = builder.start();
-					process.waitFor();
-
-					InputStream stdout = process.getInputStream();
-					BufferedReader stdoutbr = new BufferedReader(new InputStreamReader(stdout));
-
-					String line = stdoutbr.readLine();
-
-					if (line != null) {
-						String festID = line.substring(line.indexOf("play(") + 5, line.indexOf(")---{play}"));
-						cmd = "kill -9 " + festID;
-						builder = new ProcessBuilder("/bin/bash", "-c", cmd);
-						try {
-							builder.start();
-							killPID.set(0, 0);
-							disableCancel();
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-
-				} catch (IOException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-		});
+		btnStop.addActionListener(new StopListener(killPID));
 		btnStop.setEnabled(false);
 		audio_options.add(btnStop);
 		

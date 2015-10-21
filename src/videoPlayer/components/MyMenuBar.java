@@ -76,6 +76,9 @@ public class MyMenuBar extends JMenuBar {
 					BufferedWriter bw;
 					try {
 						String newProjectPath = projectSaver.getSelectedFile().getPath();
+						if(!Utility.isProject(newProjectPath)) {
+							newProjectPath += ".vdp";
+						}
 						bw = new BufferedWriter(new FileWriter(new File(newProjectPath)));
 						bw.write(VideoPane.getCurrentVideoPath());
 						bw.write("\n" + Integer.toString((MainFrame.getCurrentTheme()).getRGB()));
