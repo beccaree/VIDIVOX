@@ -7,13 +7,6 @@ import info.VideoInfo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -25,6 +18,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import universalMethods.Utility;
 import videoPlayer.MainFrame;
+import videoPlayer.components.actionListeners.OpenProjectListener;
+import videoPlayer.components.actionListeners.SaveProjectListener;
 
 @SuppressWarnings("serial")
 public class MyMenuBar extends JMenuBar {
@@ -62,88 +57,11 @@ public class MyMenuBar extends JMenuBar {
 		mnFile.add(mntmOpenNewVideo);
 		
 		JMenuItem mntmSaveProject = new JMenuItem("Save Project");
-		mntmSaveProject.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Save current project
-				JFileChooser projectSaver = new JFileChooser(System.getProperty("user.dir") + "/Projects/");
-				// Extension that I made up to distinguish from normal text files => ViDivox Project
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Vidivox Project Files (*.vdp)", "vdp");
-				projectSaver.setFileFilter(filter);
-				File newProject = new File("./Projects/vidi_project" + Utility.fileNumber("./Projects") + ".vdp");
-				projectSaver.setSelectedFile(newProject);
-				int okReturnVal = projectSaver.showSaveDialog(parent);
-				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
-					BufferedWriter bw;
-					try {
-						String newProjectPath = projectSaver.getSelectedFile().getPath();
-						if(!Utility.isProject(newProjectPath)) {
-							newProjectPath += ".vdp";
-						}
-						bw = new BufferedWriter(new FileWriter(new File(newProjectPath)));
-						bw.write(VideoPane.getCurrentVideoPath());
-						bw.write("\n" + Integer.toString((MainFrame.getCurrentTheme()).getRGB()));
-						bw.write("\n" + currentSkipInterval);
-						bw.write("\n" + AudioPane.getTextArea());
-						
-						JOptionPane.showMessageDialog(parent, newProjectPath.substring(newProjectPath.lastIndexOf('/')+1, newProjectPath.length()) + " has been saved to the Projects folder");
-						
-						bw.close();
-					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(parent, "There was an error saving the file.", "Something went wrong", JOptionPane.ERROR_MESSAGE);
-					}
-				}            
-			}
-		});
+		mntmSaveProject.addActionListener(new SaveProjectListener(parent, this));
 		mnFile.add(mntmSaveProject);
 		
 		JMenuItem mntmOpenProject = new JMenuItem("Open a Project");
-		mntmOpenProject.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Open a saved project
-				JFileChooser projectChooser = new JFileChooser(System.getProperty("user.dir") + "/Projects/");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Vidivox Project Files (*.vdp)", "vdp");
-				projectChooser.setFileFilter(filter);
-				int okReturnVal = projectChooser.showOpenDialog(getParent());
-				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
-					String filePath = projectChooser.getSelectedFile().getPath();
-				  	
-					if (Utility.isProject(filePath)) {
-						try {
-							FileReader fr = new FileReader(filePath);
-							BufferedReader br = new BufferedReader(fr);
-
-							String videoPath = br.readLine();
-							// Set current video path to saved path
-							updateVideo(videoPath);
-							
-							Color theme = new Color(Integer.parseInt(br.readLine()));
-							// Set current theme to saved theme
-							updateTheme(theme);
-							
-							int skipInterval = Integer.parseInt(br.readLine());
-							// Set current skip interval
-							updateSkipInt(skipInterval);
-							
-							String comment = br.readLine();
-							// Set text area to comment saved
-							AudioPane.writeToTextArea(comment);
-
-							br.close();
-
-						} catch (FileNotFoundException e1) {
-							JOptionPane.showMessageDialog(parent, "The file you chose cannot be found, check that it exists.", "File not found", JOptionPane.ERROR_MESSAGE);
-						} catch (NumberFormatException e1) {
-							JOptionPane.showMessageDialog(parent, "The file you have chosen is in the wrong format, please check that it is a VIDIVOX project file (.vdp)", "Invalid file", JOptionPane.ERROR_MESSAGE);
-						} catch (IOException e1) {
-							JOptionPane.showMessageDialog(parent, "The project file you have chosen could not be loaded.", "Invalid file", JOptionPane.ERROR_MESSAGE);
-						}
-					} else {
-						JOptionPane.showMessageDialog(parent, "The file you have chosen is in the wrong format, please check that it is a VIDIVOX project file (.vdp)", "Invalid file", JOptionPane.ERROR_MESSAGE);
-					}
-					
-				}
-			}
-		});
+		mntmOpenProject.addActionListener(new OpenProjectListener(parent, this));
 		mnFile.add(mntmOpenProject);
 				
 		JMenuItem mntmExit = new JMenuItem("Exit");
@@ -256,22 +174,26 @@ public class MyMenuBar extends JMenuBar {
 		mnHelp.add(mntmCreating);
 	}
 
-	protected void updateTheme(Color c) {
+	public void updateTheme(Color c) {
 		// Update theme in other components
 		VideoPane.setTheme(c);
 		AudioPane.setTheme(c);
 		MainFrame.setCurrentTheme(c);
 	}
 	
-	protected void updateSkipInt(int skip) {
+	public void updateSkipInt(int skip) {
 		// Update skip interval
 		currentSkipInterval = skip;
 		VideoPane.setSkipInterval(skip);
 	}
 	
-	protected void updateVideo(String path) {
+	public void updateVideo(String path) {
 		VideoPane.setCurrentVideoPath(path);
 		MainFrame.initialiseVideo();
 		VideoPane.setPlayBtnIcon();
+	}
+	
+	public int getSkipInt() {
+		return currentSkipInterval;
 	}
 }

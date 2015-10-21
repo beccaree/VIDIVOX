@@ -61,9 +61,9 @@ public class Utility {
 	}
 	
 	public static boolean isProject(String path) {
-		String ext = path.substring(path.length() - 3);
+		String ext = path.substring(path.length() - 4);
 		
-		return ext.equals("vdp");
+		return ext.equals(".vdp");
 	}
 	
 	public static void saveAsMp3(String commentary, String name, Double speed) {
