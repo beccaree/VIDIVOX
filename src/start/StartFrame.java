@@ -118,6 +118,7 @@ public class StartFrame extends JFrame {
 		
 		final JCheckBox chckbxDefaultVid = new JCheckBox("Use Bunny Video"); // Tick if user wants to use the big buck bunny video
 		panel_2.add(chckbxDefaultVid);
+		
 		File bunny = new File("./VideoFiles/bunny.avi");
 		if(!bunny.exists()) {
 			chckbxDefaultVid.setEnabled(false);
@@ -164,8 +165,8 @@ public class StartFrame extends JFrame {
 		JPanel panel_4 = new JPanel();
 		panel_3.add(panel_4, BorderLayout.EAST);
 		
-		JButton btnNewButton = new JButton("Ok");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnOk = new JButton("Ok");
+		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Color theme;
 				if(chckbxPink.isSelected()) {
@@ -187,7 +188,7 @@ public class StartFrame extends JFrame {
 
 			}
 		});
-		panel_4.add(btnNewButton);
+		panel_4.add(btnOk);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {

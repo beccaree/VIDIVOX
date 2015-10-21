@@ -72,7 +72,7 @@ public class VideoPane extends JPanel {
 		bar = new JProgressBar(); // Shows the progress of the video (GUI)
 		bar.addMouseListener(new MouseAdapter() {            
 		    public void mouseClicked(MouseEvent e) {
-		    	// http://stackoverflow.com/questions/18146914/get-value-on-clicking-jprogressbar
+		    	// http://stackoverflow.com/questions/18146914/get-value-on-clicking-jprogressbar ------->
 
 		        // Retrieves the mouse position relative to the component origin.
 		        int mouseX = e.getX();

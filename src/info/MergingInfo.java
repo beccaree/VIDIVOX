@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
+/**
+ * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * Class contains graphical user interface code for the merging instructions and information.
+ */
 @SuppressWarnings("serial")
 public class MergingInfo extends JFrame {
 
@@ -47,30 +51,21 @@ public class MergingInfo extends JFrame {
 		bottom.add(buttons_panel, BorderLayout.NORTH);
 		buttons_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		final JLabel lblSubtitle = new JLabel("Merging audio at the beginning");
+		final JLabel lblSubtitle = new JLabel("Merge Audio here...");
 		// Explanations begin with \n for formatting reasons (looks better)
-		final JTextArea textArea = new JTextArea("\nSimply click this button, and fill in all options for the 'Merge' button to become enabled.\n"
-				+ "This will merge your chosen audio file at the beginning of the video, the merge functions of this program will automatically overlap the original auido of the video.\n"
+		final JTextArea textArea = new JTextArea("Please ensure you create the MP3 file you want to merge first before you click the merge button.\n"
+				+"The merge function will merge the chosen audio at the point where the video is at, "
+				+ "although you can change the time at which you want to merge within the prompt that pops up.\n"
 				+ "This video is then saved in a folder named VideoFiles.");
-		
-		JButton btnMergeAudioAt = new JButton("Merge Audio at Beginning");
-		btnMergeAudioAt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lblSubtitle.setText("Merging audio at the beginning");
-				textArea.setText("\nSimply click this button, and fill in all options for the 'Merge' button to become enabled.\n"
-						+ "This will merge your chosen audio file at the beginning of the video, the merge functions of this program will automatically overlap the original auido of the video.\n"
-						+ "This video is then saved in a folder named VideoFiles.");
-			}
-		});
-		buttons_panel.add(btnMergeAudioAt);
 		
 		JButton btnMergeAudioHere = new JButton("Merge Audio here...");
 		btnMergeAudioHere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the merge button works
 				lblSubtitle.setText("Merging audio at any point");
-				textArea.setText("\nFor this button to become enabled, the video that is currently playing must be paused.\n"
-						+ "Once the video is paused, the merge function will merge the chosen audio at the point where the video is paused at, "
-						+ "so please ensure that the video is paused at your desired position.\n"
+				textArea.setText("Please ensure you create the MP3 file you want to merge first before you click the merge button.\n"
+						+"The merge function will merge the chosen audio at the point where the video is at, "
+						+ "although you can change the time at which you want to merge within the prompt that pops up.\n"
 						+ "This video is then saved in a folder named VideoFiles.");
 			}
 		});

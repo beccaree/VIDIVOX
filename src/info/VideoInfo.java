@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
+/**
+ * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * Class contains graphical user interface code for the video control instructions and information.
+ */
 @SuppressWarnings("serial")
 public class VideoInfo extends JFrame {
 
@@ -48,12 +52,14 @@ public class VideoInfo extends JFrame {
 		buttons_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		final JLabel lblSubtitle = new JLabel("Playing and pausing the video");
+		// Explanations begin with \n for formatting reasons (looks better)
 		final JTextArea textArea = new JTextArea("\nThis button allows you to play and pause the video, you are only allowed to merge at certain points when the video is paused.");
 		
 		JButton btnSkipb = new JButton();
 		btnSkipb.setIcon(new ImageIcon(getClass().getResource("/buttons/skipb.png")));
 		btnSkipb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// Help on how the skip button works
 				lblSubtitle.setText("Skipping back in intervals");
 				textArea.setText("\nThis button allows you to skip backwards in the video, you can choose to set the interval at which it skips at by going to Edit>Set Skip Interval to...");
 			}
@@ -64,6 +70,7 @@ public class VideoInfo extends JFrame {
 		btnRewind.setIcon(new ImageIcon(getClass().getResource("/buttons/rewind.png")));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the rewind button works
 				lblSubtitle.setText("Rewinding the video");
 				textArea.setText("\nThis button allows you to rewind the video, once this is clicked, it will only stop when the play button is clicked, or if the video reaches the beginning.");
 			}
@@ -74,6 +81,7 @@ public class VideoInfo extends JFrame {
 		btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png")));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the play and pause button works
 				lblSubtitle.setText("Playing and pausing the video");
 				textArea.setText("\nThis button allows you to play and pause the video, you are only allowed to merge at certain points when the video is paused.");
 			}
@@ -84,6 +92,7 @@ public class VideoInfo extends JFrame {
 		btnForward.setIcon(new ImageIcon(getClass().getResource("/buttons/forward.png")));
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the forward button works
 				lblSubtitle.setText("Fast Forwarding the video");
 				textArea.setText("\nThis button allows you to fast forward the video, once this is clicked, it will only stop when the play button is clicked, or if the video reaches the end.");
 			}
@@ -94,6 +103,7 @@ public class VideoInfo extends JFrame {
 		btnSkipf.setIcon(new ImageIcon(getClass().getResource("/buttons/skipf.png")));
 		btnSkipf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the skip button works
 				lblSubtitle.setText("Skipping Forwards in intervals");
 				textArea.setText("\nThis button allows you to skip forwards in the video, you can choose to set the interval at which it skips at by going to Edit>Set Skip Interval to...");
 			}
@@ -104,8 +114,10 @@ public class VideoInfo extends JFrame {
 		btnSound.setIcon(new ImageIcon(getClass().getResource("/buttons/unmute.png")));
 		btnSound.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the mute button works
 				lblSubtitle.setText("Sound controls of the video");
-				textArea.setText("\nThis button allows you to mute and unmute the video that is currently playing.\n Next to this is a slider which controls the volume of video.");
+				textArea.setText("\nThis button allows you to mute and unmute the video that is currently playing.\n Next to this is a slider that controls the volume of video, "
+						+ "which will be disabled when mute is clicked.");
 			}
 		});
 		buttons_panel.add(btnSound);

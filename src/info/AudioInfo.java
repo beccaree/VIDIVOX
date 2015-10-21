@@ -13,6 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
+/**
+ * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * Class contains graphical user interface code for the audio instructions and information.
+ */
+
 @SuppressWarnings("serial")
 public class AudioInfo extends JFrame {
 
@@ -47,13 +52,17 @@ public class AudioInfo extends JFrame {
 		buttons_panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		final JLabel lblSubtitle = new JLabel("Speaking with festival");
-		final JTextArea textArea = new JTextArea("\nThis button lets a computer voice speak out the commentary that you have entered above it.\n This can be stopped with the 'Stop' button at any time.");
+		// Explanations begin with \n for formatting reasons (looks better)
+		final JTextArea textArea = new JTextArea("\nThis button lets a computer voice speak out the commentary that you have entered above it.\n This can be stopped with the 'Stop' button at any time."
+				+ "\nThe talking speed can be changed before speak button is clicked with the slider below.");
 		
 		JButton btnSkipb = new JButton("Speak");
 		btnSkipb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// Help on how the speak button works
 				lblSubtitle.setText("Speaking with festival");
-				textArea.setText("\nThis button lets a computer voice speak out the commentary that you have entered above it.\n This can be stopped with the 'Stop' button at any time.");
+				textArea.setText("\nThis button lets a computer voice speak out the commentary that you have entered above it.\n This can be stopped with the 'Stop' button at any time."
+						+ "\nThe talking speed can be changed before speak button is clicked with the slider below.");
 			}
 		});
 		buttons_panel.add(btnSkipb);
@@ -61,8 +70,9 @@ public class AudioInfo extends JFrame {
 		JButton btnMergeAudioHere = new JButton("Stop");
 		btnMergeAudioHere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the speak button works
 				lblSubtitle.setText("Stopping the festival voice");
-				textArea.setText("\nThis button stops the computer voice that is talking, it does nothing if no voices are speaking.");
+				textArea.setText("\nThis button stops the computer voice that is talking, it does cannot be clicked if no voices are speaking.");
 			}
 		});
 		buttons_panel.add(btnMergeAudioHere);
@@ -70,8 +80,10 @@ public class AudioInfo extends JFrame {
 		JButton btnPlay = new JButton("Save As MP3");
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Help on how the save button works
 				lblSubtitle.setText("Saving your text as an MP3 (audio) file");
-				textArea.setText("\nThis button prompts you for a name for your new audio file, and saves it in a folder named MP3Files.");
+				textArea.setText("\nThis button prompts you for a name for your new audio file, and saves it in a folder named MP3Files."
+						+ "The speed of speaking can also be changed before the audio is saved.");
 			}
 		});
 		buttons_panel.add(btnPlay);
