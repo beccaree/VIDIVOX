@@ -141,12 +141,10 @@ public class VideoPane extends JPanel {
 					video.play(); // Play the video
 					playClicked = true;
 					stopForward = false;
-					AudioPane.btnMergeAt.setEnabled(false);
 				} else {
 					btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png")));
 					video.pause(); // Pause the video
 					playClicked = false;
-					AudioPane.btnMergeAt.setEnabled(true);
 				}
 			}
 		});

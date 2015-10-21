@@ -92,7 +92,6 @@ public class StartFrame extends JFrame {
 		panel.add(panel_1);
 		
 		txtVideoPath = new JTextField();
-		txtVideoPath.setText("/VideoFiles/");
 		panel_1.add(txtVideoPath);
 		txtVideoPath.setColumns(30);
 		
@@ -102,7 +101,7 @@ public class StartFrame extends JFrame {
 				
 				// Allows user to choose their own video file to play
 				JFileChooser videoChooser = new JFileChooser(System.getProperty("user.dir") + "/VideoFiles/");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video Files (*.avi) or (*.mp4)", "avi", "mp4");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video Files (*.avi | *.mp4)", "avi", "mp4");
 				videoChooser.setFileFilter(filter);
 				int okReturnVal = videoChooser.showOpenDialog(getParent());
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {

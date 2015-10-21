@@ -181,22 +181,11 @@ public class AudioPane extends JPanel {
 		add(merge_Panel);
 		merge_Panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		lblsaveFirst = new JLabel("Save commentary before merging");
+		lblsaveFirst = new JLabel("1) Save commentary before merging");
 		lblsaveFirst.setForeground(theme);
 		merge_Panel.add(lblsaveFirst);
 		
-		// Let user select an .mp3 file to merge into the beginning of current video
-		JButton btnMergeBegin = new JButton("Merge Audio at Beginning");
-		btnMergeBegin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Simply merge the video at the beginning
-				JDialog merge = new MergePrompt(0);
-				merge.setVisible(true);
-			}
-		});
-		merge_Panel.add(btnMergeBegin);
-		
-		lblPauseFirst = new JLabel("Please pause video at desired position");
+		lblPauseFirst = new JLabel("2) Pause video at desired position");
 		lblPauseFirst.setForeground(theme);
 		merge_Panel.add(lblPauseFirst);
 		
@@ -210,7 +199,6 @@ public class AudioPane extends JPanel {
 				merge.setVisible(true);
 			}
 		});
-		btnMergeAt.setEnabled(false);
 		merge_Panel.add(btnMergeAt);
 	}
 	
