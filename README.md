@@ -1,9 +1,20 @@
 SE206 2015 - Project
 
-README file for peer review submission (unfinished)
+VIDIVOX - Video Commentary platform
 
-Run executable jar file from terminal, with your current directory set in ProjectVIDIVOX with the following command:
+OPERATING SYSTEM
+Linux Main UG4
 
-	java -jar VIDIVOX_rlee291.jar
+HOW TO RUN
+Double click ProjectVIDIVOX_rlee291.jar to run.
+If executable permission is required, right click on the file >Properties >Permissions, then check the Executable check box. You should be able to double click to run it now.
 
-Have fun :D
+Running executable jar file from terminal, with your current directory set in ProjectVIDIVOX, enter the following command:
+
+	java -jar ProjectVIDIVOX_rlee291.jar
+
+
+
+FILE CREATION
+This program will create three folders required in your home directory. These are MP3Files, VideoFiles and Projects.
+If you would like the default video option to work, move the video 'bunny.avi' into the VideoFiles folder.
