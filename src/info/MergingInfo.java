@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
 /**
- * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * @author Rebecca Lee
  * Class contains graphical user interface code for the merging instructions and information.
  */
 @SuppressWarnings("serial")
@@ -62,7 +62,7 @@ public class MergingInfo extends JFrame {
 		btnMergeAudioHere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Help on how the merge button works
-				lblSubtitle.setText("Merging audio at any point");
+				lblSubtitle.setText("Merging Audio here...");
 				textArea.setText("Please ensure you create the MP3 file you want to merge first before you click the merge button.\n"
 						+"The merge function will merge the chosen audio at the point where the video is at, "
 						+ "although you can change the time at which you want to merge within the prompt that pops up.\n"

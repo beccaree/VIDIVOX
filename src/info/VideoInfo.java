@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
 /**
- * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * @author Rebecca Lee
  * Class contains graphical user interface code for the video control instructions and information.
  */
 @SuppressWarnings("serial")

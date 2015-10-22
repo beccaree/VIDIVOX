@@ -10,10 +10,15 @@ import videoPlayer.BGTasks.AudioTools;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
- * Class contains necessary methods for completing actions in MainFrame and StartFrame
+ * Class contains necessary methods for completing actions in many of the classes
  */
 public class Utility {
 
+	/**
+	 * This method checks if the file in the input is a video file.
+	 * @param path of file to be checked
+	 * @return if file is a video or not
+	 */
 	public static boolean isVideo(String path) {
 		
 		String cmd = "file "+ path;
@@ -37,6 +42,11 @@ public class Utility {
 		return false;
 	}
 	
+	/**
+	 * This method checks if the file in the input is a video file.
+	 * @param path of file to be checked
+	 * @return if file is .mp3 or not
+	 */
 	public static boolean isMp3(String path) {
 
 	    String cmd = "file "+ path;
@@ -60,23 +70,36 @@ public class Utility {
 		return false;
 	}
 	
+	/**
+	 * This method checks if the file in the input is a vidivox project file.
+	 * @param path of file to be checked
+	 * @return if file is a project or not
+	 */
 	public static boolean isProject(String path) {
 		String ext = path.substring(path.length() - 4);
 		
 		return ext.equals(".vdp");
 	}
 	
+	/**
+	 * Creates a .mp3 file based on the specifications from the input.  
+	 * @param commentary from the user input
+	 * @param name of the new .mp3 file
+	 * @param speed of speaking for festival
+	 */
 	public static void saveAsMp3(String commentary, String name, Double speed) {
 		
 		try {
 
+			// Creates the scheme file which creates the .sound.wav file without speaking
 			AudioTools.createFestivalScheme(commentary, speed, true);
 
 			// Generate a hidden sound.wav file from the saved user commentary
 			String cmd = "festival -b ./MP3Files/.festival.scm;"
 					// Create a MP3 file from the sound.wav file
 					+ "ffmpeg -i ./MP3Files/.sound.wav \'./MP3Files/" + name + ".mp3\'";
-			startProcess(cmd);
+			ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", cmd);
+			processBuilder.start();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -84,6 +107,11 @@ public class Utility {
 		
 	}
 	
+	/**
+	 * Checks if the string input contains any characters other than alphanumeric characters
+	 * @param string to be checked
+	 * @return if input contains alphanumeric chars
+	 */
 	public static boolean isAlphaNumeric(String s) {
 		// This returns true if the string contains only alphanumeric characters, else returns false
 	    String pattern= "^[a-zA-Z0-9]*$";
@@ -93,11 +121,21 @@ public class Utility {
 	    return false;   
 	}
 	
+	/**
+	 * Finds out the number of files already in the input folder, used for suggested name generation
+	 * @param folderPath to check for
+	 * @return number of files
+	 */
 	public static int fileNumber(String folderPath) {
 		// This returns the number of files in the folder
 		return new File(folderPath).listFiles().length;
 	}
 	
+	/**
+	 * Formats the input time in seconss into the format mm:ss for video time labels
+	 * @param seconds 
+	 * @return formated timing
+	 */
 	public static String toMinColonSec(int seconds) {
 		// This method returns the seconds in the correct format (min:sec)
 		int secs = seconds % 60;
@@ -106,18 +144,9 @@ public class Utility {
 		if(secs > 9) {
 			return mins + ":" + secs;
 		} else {
+			// Add a zero before single digit seconds
 			return mins + ":0" + secs;
 		}
-	}
-
-	/**
-	 * Starts building a process for any BASH command passed in
-	 * @param cmd
-	 * @throws IOException
-	 */
-	private static void startProcess(String cmd) throws IOException {
-		ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", cmd);
-		builder.start();
 	}
 
 }

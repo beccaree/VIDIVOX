@@ -17,6 +17,10 @@ import universalMethods.Utility;
 import videoPlayer.components.AudioPane;
 import videoPlayer.components.MyMenuBar;
 
+/**
+ * @author Rebecca Lee 
+ * Contains action performed method for when opening a project is clicked from the file menu
+ */
 public class OpenProjectListener implements ActionListener {
 
 	private JFrame parent;

@@ -72,7 +72,10 @@ public class VideoPane extends JPanel {
 		bar = new JProgressBar(); // Shows the progress of the video (GUI)
 		bar.addMouseListener(new MouseAdapter() {            
 		    public void mouseClicked(MouseEvent e) {
-		    	// http://stackoverflow.com/questions/18146914/get-value-on-clicking-jprogressbar ------->
+		    	/*
+		    	 * How to change value to progress bar with a mouse listener
+		    	 * http://stackoverflow.com/questions/18146914/get-value-on-clicking-jprogressbar
+		    	 */
 
 		        // Retrieves the mouse position relative to the component origin.
 		        int mouseX = e.getX();
@@ -94,15 +97,15 @@ public class VideoPane extends JPanel {
 		controls.add(video_control);
 		video_control.setLayout(new BoxLayout(video_control, BoxLayout.X_AXIS));
 				
-		// Initialize all the buttons in video_control Panel
+		// Initialize all the buttons in video_control panel
 		JButton btnSkipBack = new JButton();
 		btnSkipBack.setIcon(new ImageIcon(getClass().getResource("/buttons/skipb.png")));
-		JButton btnRewind = new JButton();
+		final JButton btnRewind = new JButton();
 		btnRewind.setIcon(new ImageIcon(getClass().getResource("/buttons/rewind.png")));
 		btnPlay = new JButton();
 		pauseIcon = new ImageIcon(getClass().getResource("/buttons/pause.png"));
 		btnPlay.setIcon(pauseIcon);
-		JButton btnForward = new JButton();
+		final JButton btnForward = new JButton();
 		btnForward.setIcon(new ImageIcon(getClass().getResource("/buttons/forward.png")));
 		JButton btnSkipForward = new JButton();
 		btnSkipForward.setIcon(new ImageIcon(getClass().getResource("/buttons/skipf.png")));
@@ -117,18 +120,13 @@ public class VideoPane extends JPanel {
 				
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnRewind.setEnabled(false);
+				btnForward.setEnabled(false);
 				// Continues rewinding until user clicks play
-				playClicked = true;
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				playClicked = false;
 				btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png"))); // Set button to play
-				BgForward rewind = new BgForward(-500, video); // Make a new background task
-				rewind.execute();
+				BgForward forward = new BgForward(-500, video); // Make a new background task
+				forward.execute();
 			}
 		});
 		video_control.add(btnRewind);
@@ -141,6 +139,8 @@ public class VideoPane extends JPanel {
 					video.play(); // Play the video
 					playClicked = true;
 					stopForward = false;
+					btnRewind.setEnabled(true);
+					btnForward.setEnabled(true);
 				} else {
 					btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png")));
 					video.pause(); // Pause the video
@@ -152,6 +152,8 @@ public class VideoPane extends JPanel {
 
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				btnRewind.setEnabled(false);
+				btnForward.setEnabled(false);
 				// Continues forwarding until user clicks play
 				playClicked = false;
 				btnPlay.setIcon(new ImageIcon(getClass().getResource("/buttons/play.png"))); // Set button to play
@@ -194,7 +196,6 @@ public class VideoPane extends JPanel {
 		
 		final JSlider slider = new JSlider(); // JSlider for volume control
 		slider.addChangeListener(new ChangeListener() {
-		     @Override
 		     public void stateChanged(ChangeEvent e) {
 		     	// Change the volume of the video to the value obtained from the slider
 		    	 video.setVolume(((JSlider) e.getSource()).getValue());
@@ -262,6 +263,8 @@ public class VideoPane extends JPanel {
 			}
 		});
 	}
+	
+	// Add necessary public getters and setters for use with other classes outside of this package
 	
 	public static void setMaxBar(int length) {
 		// Sets the maximum length of the progress bar to length

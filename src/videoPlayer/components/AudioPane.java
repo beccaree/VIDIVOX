@@ -31,6 +31,10 @@ import videoPlayer.components.actionListeners.StopListener;
 
 import merge.MergePrompt;
 
+/**
+ * @author Rebecca Lee
+ * Contains GUI implementation for entering commentary, saving as .mp3, and merging
+ */
 @SuppressWarnings("serial")
 public class AudioPane extends JPanel {
 	
@@ -130,7 +134,10 @@ public class AudioPane extends JPanel {
 		speedChooser.setBackground(Color.DARK_GRAY);
 		speedChooser.setPaintLabels(true);
 		
-		// https://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+		/*
+		 * Labeling sliders with words
+		 * https://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+		 */
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		JLabel lblFast = new JLabel("Fast");
 		lblFast.setForeground(Color.white);

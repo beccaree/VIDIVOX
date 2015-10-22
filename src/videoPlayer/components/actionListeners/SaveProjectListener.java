@@ -18,6 +18,10 @@ import videoPlayer.components.AudioPane;
 import videoPlayer.components.MyMenuBar;
 import videoPlayer.components.VideoPane;
 
+/**
+ * @author Rebecca Lee 
+ * Contains action performed method for when saving a project is clicked from the file menu
+ */
 public class SaveProjectListener implements ActionListener {
 	
 	private JFrame parent;
@@ -29,6 +33,7 @@ public class SaveProjectListener implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		
 		// Save current project
 		JFileChooser projectSaver = new JFileChooser(System.getProperty("user.dir") + "/Projects/");
 		// Extension that I made up to distinguish from normal text files => ViDivox Project
@@ -40,22 +45,29 @@ public class SaveProjectListener implements ActionListener {
 		if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 			BufferedWriter bw;
 			try {
+				
 				String newProjectPath = projectSaver.getSelectedFile().getPath();
 				if(!Utility.isProject(newProjectPath)) {
 					newProjectPath += ".vdp";
 				}
 				bw = new BufferedWriter(new FileWriter(new File(newProjectPath)));
+				// Write current video
 				bw.write(VideoPane.getCurrentVideoPath());
+				// Write current theme
 				bw.write("\n" + Integer.toString((MainFrame.getCurrentTheme()).getRGB()));
+				// Write skip interval
 				bw.write("\n" + menu.getSkipInt());
+				// Write the text in the text area
 				bw.write("\n" + AudioPane.getTextArea());
 				
 				JOptionPane.showMessageDialog(parent, newProjectPath.substring(newProjectPath.lastIndexOf('/')+1, newProjectPath.length()) + " has been saved to the Projects folder");
 				
 				bw.close();
+				
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(parent, "There was an error saving the file.", "Something went wrong", JOptionPane.ERROR_MESSAGE);
 			}
-		} 
+		}
+		
 	}
 }

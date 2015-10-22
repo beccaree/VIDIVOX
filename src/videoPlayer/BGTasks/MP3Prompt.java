@@ -22,7 +22,7 @@ import java.io.File;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
- * Class that contains user interface and implementation that prompts the user to name their mp3 and video 
+ * Class that prompts the user to name their mp3
  */
 @SuppressWarnings("serial")
 public class MP3Prompt extends JDialog {
@@ -53,6 +53,7 @@ public class MP3Prompt extends JDialog {
         lblMpName.setBounds(90, 110, 110, 20);
         contentPanel.add(lblMpName);
         
+        // Generate suggested name for the .mp3 file
         final JTextField textField = new JTextField("myComment" + Utility.fileNumber("./MP3Files"));
         textField.setBounds(170, 110, 150, 20);
         contentPanel.add(textField);
@@ -67,9 +68,7 @@ public class MP3Prompt extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				String name = textField.getText();
 				// Check that name is not blank or contains invalid characters, name can only have a-z,A-Z,_,- or 0-9
-				if(name.length() == 0) {
-					JOptionPane.showMessageDialog(thisDialog, "You didn't enter anything.", "Empty name", JOptionPane.ERROR_MESSAGE);
-				} else if(!Utility.isAlphaNumeric(name)) {
+				if(!Utility.isAlphaNumeric(name)) {
 					JOptionPane.showMessageDialog(thisDialog, "File name can only contain alphanumeric characters. (a-z,A-Z,0-9)", "Invalid name", JOptionPane.ERROR_MESSAGE);
 				} else {
 					// Check if name already exists
@@ -93,7 +92,7 @@ public class MP3Prompt extends JDialog {
 		
 		textField.getDocument().addDocumentListener(new DocumentListener() {
 			public void insertUpdate(DocumentEvent e) {
-				// Make sure textField is none empty
+				// Make sure textField is none empty and enable the ok button else disable
 				if(textField.getText().length() > 0) {
 					okButton.setEnabled(true);
 				} else {

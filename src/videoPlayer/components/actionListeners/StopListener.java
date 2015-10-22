@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 import videoPlayer.components.AudioPane;
 
+/**
+ * @author Rebecca Lee 
+ * Contains action performed method for when stop is clicked for festival
+ */
 public class StopListener implements ActionListener {
 
 	private ArrayList<Integer> pid;

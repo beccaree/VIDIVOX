@@ -11,7 +11,7 @@ import videoPlayer.components.VideoPane;
 
 /**
  * @author Rebecca Lee
- * This class contains all the user interface implementation and functionality of the video player.
+ * This class contains GUI implementation for the Main video player screen
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
 		// Adding the two different panels to the two sides of the split pane ----------->
 		JSplitPane splitPane = new JSplitPane();
 		setContentPane(splitPane);
-		splitPane.setResizeWeight(0.9); // Resizes the frames in a 8:2 ratio
+		splitPane.setResizeWeight(0.9); // Resizes the frames in a 9:1 ratio
 		splitPane.setLeftComponent(videoPane);
 		splitPane.setRightComponent(audioPane);
 		splitPane.setDividerLocation(700 + splitPane.getInsets().left);
@@ -53,7 +53,11 @@ public class MainFrame extends JFrame {
 		initialiseVideo();
 	}
 	
+	/**
+	 * Initializes video and updates all relevant information
+	 */
 	public static void initialiseVideo() {
+		
 		String vidPath = VideoPane.getCurrentVideoPath();
 		VideoPane.video.playMedia(vidPath); // Play the video
 		// Sets the progress bar to the length of the current video
@@ -65,6 +69,7 @@ public class MainFrame extends JFrame {
 		VideoPane.setVideoLength(vidLength[0]);
 		VideoPane.video.setVolume(50); // Set initial volume to 50 (same as JSlider default value)
 		VideoPane.setVideoName(vidPath.substring(vidPath.lastIndexOf('/')+1, vidPath.length()));
+		
 	}
 	
 	public static Color getCurrentTheme() {

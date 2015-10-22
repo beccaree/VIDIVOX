@@ -21,13 +21,17 @@ import videoPlayer.MainFrame;
 import videoPlayer.components.actionListeners.OpenProjectListener;
 import videoPlayer.components.actionListeners.SaveProjectListener;
 
+/**
+ * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * Contains top menu bar which contains file, edit, help menus
+ */
 @SuppressWarnings("serial")
 public class MyMenuBar extends JMenuBar {
 	
 	private int currentSkipInterval = 5;
 	
 	public MyMenuBar(final JFrame parent) {
-				
+		
 		JMenu mnFile = new JMenu("File");
 		add(mnFile);
 				
@@ -36,12 +40,12 @@ public class MyMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				// Changing the video that we are editing
 				// Prompt user for the video they want to change to
-						
+				
 				String newPath;
 				JFileChooser videoChooser = new JFileChooser(System.getProperty("user.dir") + "/VideoFiles/");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video Files (*.avi) or (*.mp4)", "avi", "mp4");
 				videoChooser.setFileFilter(filter);
-				int okReturnVal = videoChooser.showOpenDialog(getParent());
+				int okReturnVal = videoChooser.showOpenDialog(parent);
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 					newPath = videoChooser.getSelectedFile().getPath();
 					if(Utility.isVideo(newPath)) {
@@ -174,6 +178,9 @@ public class MyMenuBar extends JMenuBar {
 		mnHelp.add(mntmCreating);
 	}
 
+	/**
+	 * @param colour to update theme to
+	 */
 	public void updateTheme(Color c) {
 		// Update theme in other components
 		VideoPane.setTheme(c);
@@ -181,18 +188,27 @@ public class MyMenuBar extends JMenuBar {
 		MainFrame.setCurrentTheme(c);
 	}
 	
+	/**
+	 * @param skip interval to update
+	 */
 	public void updateSkipInt(int skip) {
 		// Update skip interval
 		currentSkipInterval = skip;
 		VideoPane.setSkipInterval(skip);
 	}
 	
+	/**
+	 * @param video path to change to
+	 */
 	public void updateVideo(String path) {
 		VideoPane.setCurrentVideoPath(path);
 		MainFrame.initialiseVideo();
 		VideoPane.setPlayBtnIcon();
 	}
 	
+	/**
+	 * @return the current skip interval
+	 */
 	public int getSkipInt() {
 		return currentSkipInterval;
 	}

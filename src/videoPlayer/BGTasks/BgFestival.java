@@ -10,7 +10,7 @@ import videoPlayer.components.AudioPane;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
- * Class executes festival text-to-speech from commentary entered by the user
+ * Class executes festival scheme from commentary entered by the user
  */
 public class BgFestival extends SwingWorker<Void, Void> {
 
@@ -22,7 +22,7 @@ public class BgFestival extends SwingWorker<Void, Void> {
 	}
 
 	/* 
-	 * Uses festival to speak out the commentary to the user
+	 * Uses festival scheme file to speak out the commentary to the user
 	 * @see javax.swing.SwingWorker#doInBackground()
 	 */
 	@Override
@@ -44,6 +44,8 @@ public class BgFestival extends SwingWorker<Void, Void> {
 			killPID.add(pid);
 			
 			line = stdoutbr.readLine();
+			// Wait for the process to return done when it finishes speaking
+			// If process is killed (i.e. stop is clicked), done will still be printed
 			while(!line.equals("done")) {
 				line = stdoutbr.readLine();
 			}
@@ -57,6 +59,7 @@ public class BgFestival extends SwingWorker<Void, Void> {
 
 	@Override
 	public void done() {
+		// Disable the cancel button and enable speak when festival finishes speaking
 		AudioPane.disableCancel();
 	}
 }

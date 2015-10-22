@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
 /**
- * @author Rebecca Lee (Isabel Zhuang - prototype)
+ * @author Rebecca Lee
  * Class contains graphical user interface code for the audio instructions and information.
  */
 

@@ -29,7 +29,7 @@ import videoPlayer.MainFrame;
 
 /**
  * @author Rebecca Lee (Isabel Zhuang - prototype)
- * Class contains implementation and graphical user interface code for the starting frame.
+ * Class with GUI allows user to choose a video they would like to work on
  */
 @SuppressWarnings("serial")
 public class StartFrame extends JFrame {
@@ -91,7 +91,7 @@ public class StartFrame extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
 		
-		txtVideoPath = new JTextField();
+		txtVideoPath = new JTextField("/VideoFiles/");
 		panel_1.add(txtVideoPath);
 		txtVideoPath.setColumns(30);
 		
@@ -105,6 +105,7 @@ public class StartFrame extends JFrame {
 				videoChooser.setFileFilter(filter);
 				int okReturnVal = videoChooser.showOpenDialog(getParent());
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
+					// Initialize video path
 					videoPath = videoChooser.getSelectedFile().getPath();
 				  	txtVideoPath.setText(videoPath);
 				}
@@ -119,6 +120,7 @@ public class StartFrame extends JFrame {
 		final JCheckBox chckbxDefaultVid = new JCheckBox("Use Bunny Video"); // Tick if user wants to use the big buck bunny video
 		panel_2.add(chckbxDefaultVid);
 		
+		// If bunny video is not in the VideoFiles folder, then disable default button
 		File bunny = new File("./VideoFiles/bunny.avi");
 		if(!bunny.exists()) {
 			chckbxDefaultVid.setEnabled(false);
@@ -131,6 +133,7 @@ public class StartFrame extends JFrame {
 		JLabel lblTheme = new JLabel("Theme:");
 		themeChooser.add(lblTheme);
 		
+		// Check boxes to let user choose the theme, exactly one box is always ticked
 		final JCheckBox chckbxPink = new JCheckBox("Pink");
 		final JCheckBox chckbxBlue = new JCheckBox("Blue");
 		chckbxPink.addActionListener(new ActionListener() {
@@ -168,6 +171,8 @@ public class StartFrame extends JFrame {
 		JButton btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				// Set color for the theme
 				Color theme;
 				if(chckbxPink.isSelected()) {
 					theme = Color.pink;
