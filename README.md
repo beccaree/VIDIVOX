@@ -16,5 +16,5 @@ Running executable jar file from terminal, with your current directory set in Pr
 
 
 FILE CREATION
-This program will create three folders required in your home directory. These are MP3Files, VideoFiles and Projects.
+This program will create three folders required in your home directory if it is run by double clicking, else, they will be created in the current directory if the .jar file is run from the terminal. These are MP3Files, VideoFiles and Projects.
 If you would like the default video option to work, move the video 'bunny.avi' into the VideoFiles folder.
