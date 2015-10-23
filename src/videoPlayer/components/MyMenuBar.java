@@ -1,5 +1,7 @@
 package videoPlayer.components;
 
+import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
+
 import info.AudioInfo;
 import info.MergingInfo;
 import info.VideoInfo;
@@ -14,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import universalMethods.Utility;
@@ -58,14 +61,17 @@ public class MyMenuBar extends JMenuBar {
 				
 			}
 		});
+		mntmOpenNewVideo.setAccelerator(KeyStroke.getKeyStroke('O', CTRL_DOWN_MASK));
 		mnFile.add(mntmOpenNewVideo);
 		
 		JMenuItem mntmSaveProject = new JMenuItem("Save Project");
 		mntmSaveProject.addActionListener(new SaveProjectListener(parent, this));
+		mntmSaveProject.setAccelerator(KeyStroke.getKeyStroke('S', CTRL_DOWN_MASK));
 		mnFile.add(mntmSaveProject);
 		
 		JMenuItem mntmOpenProject = new JMenuItem("Open a Project");
 		mntmOpenProject.addActionListener(new OpenProjectListener(parent, this));
+		mntmOpenProject.setAccelerator(KeyStroke.getKeyStroke('P', CTRL_DOWN_MASK));
 		mnFile.add(mntmOpenProject);
 				
 		JMenuItem mntmExit = new JMenuItem("Exit");
