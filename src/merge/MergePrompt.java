@@ -87,12 +87,12 @@ public class MergePrompt extends JDialog {
 		btnAudioBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Browse button for audio file.
-				JFileChooser videoChooser = new JFileChooser(System.getProperty("user.dir") + "/MP3Files/");
+				JFileChooser audioChooser = new JFileChooser(System.getProperty("user.dir") + "/MP3Files/");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Audio Files (*.mp3)", "mp3");
-				videoChooser.setFileFilter(filter);
-				int okReturnVal = videoChooser.showOpenDialog(getParent());
+				audioChooser.setFileFilter(filter);
+				int okReturnVal = audioChooser.showDialog(getParent(), "Choose Audio");
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
-					audioPath = videoChooser.getSelectedFile().getPath();
+					audioPath = audioChooser.getSelectedFile().getPath();
 				  	txtAudioPath.setText(audioPath);
 				}
 			}
