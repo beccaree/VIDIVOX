@@ -41,7 +41,7 @@ public class SaveProjectListener implements ActionListener {
 		projectSaver.setFileFilter(filter);
 		File newProject = new File("./Projects/vidi_project" + Utility.fileNumber("./Projects") + ".vdp");
 		projectSaver.setSelectedFile(newProject);
-		int okReturnVal = projectSaver.showSaveDialog(parent);
+		int okReturnVal = projectSaver.showDialog(parent, "Save Project");
 		if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 			BufferedWriter bw;
 			try {

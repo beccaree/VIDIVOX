@@ -36,7 +36,7 @@ public class OpenProjectListener implements ActionListener {
 		JFileChooser projectChooser = new JFileChooser(System.getProperty("user.dir") + "/Projects/");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Vidivox Project Files (*.vdp)", "vdp");
 		projectChooser.setFileFilter(filter);
-		int okReturnVal = projectChooser.showOpenDialog(parent);
+		int okReturnVal = projectChooser.showDialog(parent, "Choose Project");
 		if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 			String filePath = projectChooser.getSelectedFile().getPath();
 		  	

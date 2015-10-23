@@ -45,7 +45,7 @@ public class MyMenuBar extends JMenuBar {
 				JFileChooser videoChooser = new JFileChooser(System.getProperty("user.dir") + "/VideoFiles/");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video Files (*.avi) or (*.mp4)", "avi", "mp4");
 				videoChooser.setFileFilter(filter);
-				int okReturnVal = videoChooser.showOpenDialog(parent);
+				int okReturnVal = videoChooser.showDialog(parent, "Choose Video");
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 					newPath = videoChooser.getSelectedFile().getPath();
 					if(Utility.isVideo(newPath)) {

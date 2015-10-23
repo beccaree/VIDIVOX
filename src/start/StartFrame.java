@@ -95,6 +95,9 @@ public class StartFrame extends JFrame {
 		panel_1.add(txtVideoPath);
 		txtVideoPath.setColumns(30);
 		
+		// Initialized here for use in browse button
+		final JCheckBox chckbxDefaultVid = new JCheckBox("Use Bunny Video"); // Tick if user wants to use the big buck bunny video
+		
 		JButton btnBrowse = new JButton("Browse");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,11 +106,14 @@ public class StartFrame extends JFrame {
 				JFileChooser videoChooser = new JFileChooser(System.getProperty("user.dir") + "/VideoFiles/");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video Files (*.avi | *.mp4)", "avi", "mp4");
 				videoChooser.setFileFilter(filter);
-				int okReturnVal = videoChooser.showOpenDialog(getParent());
+				int okReturnVal = videoChooser.showDialog(getParent(), "Choose Video");
 				if(okReturnVal == JFileChooser.APPROVE_OPTION) {
 					// Initialize video path
 					videoPath = videoChooser.getSelectedFile().getPath();
 				  	txtVideoPath.setText(videoPath);
+				  	
+				  	// Uncheck the default video check box
+				  	chckbxDefaultVid.setSelected(false);
 				}
 				
 			}
@@ -117,7 +123,6 @@ public class StartFrame extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
 		
-		final JCheckBox chckbxDefaultVid = new JCheckBox("Use Bunny Video"); // Tick if user wants to use the big buck bunny video
 		panel_2.add(chckbxDefaultVid);
 		
 		// If bunny video is not in the VideoFiles folder, then disable default button
